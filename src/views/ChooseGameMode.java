@@ -26,11 +26,11 @@ public class ChooseGameMode extends JPanel {
 
         twoPlayers.setPreferredSize(new Dimension(150,70));
         twoPlayers.addActionListener(actionListener);
-        twoPlayers.setActionCommand("PlayOnePlayer");
+        twoPlayers.setActionCommand("PlayTwoPlayers");
 
         twoPlayersLAN.setPreferredSize(new Dimension(200,80));
         twoPlayersLAN.addActionListener(actionListener);
-        twoPlayersLAN.setActionCommand("PlayOnePlayer");
+        twoPlayersLAN.setActionCommand("PlayTwoPlayersLAN");
 
         SettingsComponents.setCharacteristicsButton(onePlayer);
         SettingsComponents.setCharacteristicsButton(twoPlayers);

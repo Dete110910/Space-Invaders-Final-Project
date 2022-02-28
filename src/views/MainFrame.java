@@ -3,6 +3,7 @@ package views;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 
 public class MainFrame extends JFrame {
 
@@ -13,11 +14,13 @@ public class MainFrame extends JFrame {
     private TopGamePanel topGamePanel;
 
 
-    public MainFrame(ActionListener actionListener){
+    public MainFrame(ActionListener actionListener, KeyListener keyListener){
         super("Space Invaders");
         this.setResizable(false);
+        this.setFocusable(true);
         this.setSize(700,700);
-        this.initComponents(actionListener);
+        this.initComponents(actionListener, keyListener);
+        this.addKeyListener(keyListener);
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
@@ -37,11 +40,19 @@ public class MainFrame extends JFrame {
 
     }
 
-    private void initComponents(ActionListener actionListener){
+    public void setXPosition(int xPosition){
+        mainGamePanel.setXPosition(xPosition);
+    }
+    public void setYPosition(int yPosition){
+        mainGamePanel.setYPosition(yPosition);
+    }
+
+
+    private void initComponents(ActionListener actionListener, KeyListener keyListener){
         startingPanel = new StartingPanel(actionListener);
         namePanel = new NamePanel();
         chooseGameMode = new ChooseGameMode(actionListener);
-        mainGamePanel = new MainGamePanel();
+        mainGamePanel = new MainGamePanel(this.getWidth(), this.getHeight());
         topGamePanel = new TopGamePanel();
         this.add(namePanel, BorderLayout.NORTH);
         this.add(startingPanel);

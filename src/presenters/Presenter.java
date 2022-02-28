@@ -8,23 +8,30 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Presenter implements ActionListener, KeyListener {
-    private MainFrame startingScreen;
+    private MainFrame mainFrame;
 
     public Presenter(){
-        startingScreen = new MainFrame(this);
+        mainFrame = new MainFrame(this, this);
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         switch (actionEvent.getActionCommand()){
             case "Play":
-                startingScreen.changeToSelectPlayersPanel();
+                mainFrame.changeToSelectPlayersPanel();
                 break;
             case "HighScore":
 
                 break;
             case "PlayOnePlayer":
-                startingScreen.changeToOnePlayerPanel();
+                mainFrame.changeToOnePlayerPanel();
+
+                break;
+            case "PlayTwoPlayers":
+                System.out.println("To implement");
+                break;
+            case "PlayTwoPlayersLAN":
+                System.out.println("To implement");
                 break;
         }
     }
@@ -36,11 +43,18 @@ public class Presenter implements ActionListener, KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
+        if(e.getKeyChar() == 'a'){
+            mainFrame.setXPosition(-2);
+            mainFrame.repaint();//creo que no es necesario
+        }
+        else if(e.getKeyChar() == 'd'){
+            mainFrame.setXPosition(2);
+            mainFrame.repaint();
+        }
 
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
     }
 }
