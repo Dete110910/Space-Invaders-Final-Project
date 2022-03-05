@@ -28,7 +28,9 @@ public class MainFrame extends JFrame {
     public void changeToSelectPlayersPanel(){
         this.remove(startingPanel);
         SwingUtilities.updateComponentTreeUI(this);
+        this.namePanel.makeVisibleBackButton(true);
         this.add(chooseGameMode);
+
     }
 
     public void changeToOnePlayerPanel(){
