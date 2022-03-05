@@ -25,6 +25,13 @@ public class MainFrame extends JFrame {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
+    public void changeToMainPanel(){
+        this.remove(chooseGameMode);
+        SwingUtilities.updateComponentTreeUI(this);
+        this.namePanel.makeVisibleBackButton(false);
+        this.add(startingPanel);
+    }
+
     public void changeToSelectPlayersPanel(){
         this.remove(startingPanel);
         SwingUtilities.updateComponentTreeUI(this);
@@ -52,7 +59,7 @@ public class MainFrame extends JFrame {
 
     private void initComponents(ActionListener actionListener, KeyListener keyListener){
         startingPanel = new StartingPanel(actionListener);
-        namePanel = new NamePanel();
+        namePanel = new NamePanel(actionListener);
         chooseGameMode = new ChooseGameMode(actionListener);
         mainGamePanel = new MainGamePanel(this.getWidth(), this.getHeight());
         topGamePanel = new TopGamePanel();

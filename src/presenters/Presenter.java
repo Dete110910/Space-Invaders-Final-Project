@@ -23,9 +23,11 @@ public class Presenter implements ActionListener, KeyListener {
             case "HighScore":
 
                 break;
+            case "Back":
+                mainFrame.changeToMainPanel();
+                break;
             case "PlayOnePlayer":
                 mainFrame.changeToOnePlayerPanel();
-
                 break;
             case "PlayTwoPlayers":
                 System.out.println("To implement");

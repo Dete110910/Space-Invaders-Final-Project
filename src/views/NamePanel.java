@@ -2,19 +2,20 @@ package views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class NamePanel extends JPanel {
     private JLabel name;
     private JButton backButton;
 
-    public NamePanel(){
+    public NamePanel(ActionListener actionListener){
         this.setVisible(true);
         this.setLayout(new GridBagLayout());
         this.setBackground(Color.BLACK);
-        this.initComponents();
+        this.initComponents(actionListener);
     }
 
-    private void initComponents(){
+    private void initComponents(ActionListener actionListener){
         name = new JLabel("Space Invaders");
         name.setFont(new Font("Lucida Console", Font.PLAIN, 60));
         name.setForeground(Color.WHITE);
@@ -22,7 +23,8 @@ public class NamePanel extends JPanel {
 
         backButton = new JButton("< Back");
         backButton.setVisible(false);
-        backButton.setFocusPainted(false);
+        backButton.addActionListener(actionListener);
+        backButton.setActionCommand("Back");
 
 
         GridBagConstraints gbc = new GridBagConstraints();
