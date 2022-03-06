@@ -2,8 +2,6 @@ package views;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyListener;
-import java.awt.image.ImageObserver;
 
 public class MainGamePanel extends JPanel implements Runnable{
 
