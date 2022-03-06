@@ -47,11 +47,11 @@ public class Presenter implements ActionListener, KeyListener {
     public void keyTyped(KeyEvent e) {
         if(e.getKeyChar() == 'a'){
             mainFrame.setXPosition(-2);
-            mainFrame.repaint();//creo que no es necesario
+            //creo que no es necesario
         }
         else if(e.getKeyChar() == 'd'){
             mainFrame.setXPosition(2);
-            mainFrame.repaint();
+
         }
 
     }
