@@ -16,7 +16,6 @@ public class MainGamePanel extends JPanel implements Runnable{
         this.setVisible(true);
         this.setFocusable(true);
         this.setBackground(Color.BLACK);
-
         singleShip= new SingleShip(weight, height-680);
         shipPlayer = new ShipPlayer(weight, height);
         System.out.println(weight);
