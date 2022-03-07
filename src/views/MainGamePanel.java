@@ -3,15 +3,9 @@ package views;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainGamePanel extends JPanel implements Runnable{
-
-    private int xPosition;
-    private int yPosition;
+public class MainGamePanel extends JPanel {
     private SingleShip singleShip;
     private ShipPlayer shipPlayer;
-    private int x= 0;
-    private int y= 250;
-
     public MainGamePanel(int weight, int height){
         this.setVisible(true);
         this.setFocusable(true);
@@ -28,15 +22,17 @@ public class MainGamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         shipPlayer.paintShipPlayer(g, this);
-        singleShip.paintInvader(g, this);
-
+        singleShip.paintSingleShip(g, this);
+repaint();
     }
 
 
 
     public void setXPosition(int xPosition){
         shipPlayer.setxPosition(xPosition);
-
+    }
+    public void setPosition(int xPosition){
+        singleShip.move(xPosition);
     }
     public void setYPosition(int yPosition){
     // this.yPosition += yPosition;
@@ -45,21 +41,9 @@ public class MainGamePanel extends JPanel implements Runnable{
 
     private void initComponents(){
 
-            Thread thread= new Thread(this);
-          thread.start();
+
 
     }
 
-    @Override
-    public void run() {
-        while (true){
-            try{
-                Thread.sleep(300);
-            }catch (InterruptedException e){
-                e.printStackTrace();
-            }
-            singleShip.move();
-            repaint();
-        }
-    }
+
 }
