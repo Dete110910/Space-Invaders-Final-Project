@@ -12,6 +12,8 @@ public class MainFrame extends JFrame {
     private ChooseGameMode chooseGameMode;
     private MainGamePanel mainGamePanel;
     private TopGamePanel topGamePanel;
+    private TutorialPanel tutorialPanel;
+
 
 
     public MainFrame(ActionListener actionListener, KeyListener keyListener){
@@ -23,6 +25,7 @@ public class MainFrame extends JFrame {
         this.addKeyListener(keyListener);
         this.setVisible(true);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
     }
 
     public void changeToMainPanel(){
@@ -32,6 +35,13 @@ public class MainFrame extends JFrame {
         this.add(startingPanel);
     }
 
+    public void changeToTutorialPanel(){
+        this.remove(startingPanel);
+        this.remove(namePanel);
+        this.remove(chooseGameMode);
+        SwingUtilities.updateComponentTreeUI(this);
+        this.add(tutorialPanel);
+    }
     public void changeToSelectPlayersPanel(){
         this.remove(startingPanel);
         SwingUtilities.updateComponentTreeUI(this);
@@ -49,8 +59,12 @@ public class MainFrame extends JFrame {
 
     }
 
+
     public void setXPosition(int xPosition){
         mainGamePanel.setXPosition(xPosition);
+    }
+    public void setPosition(int xPosition){
+        mainGamePanel.setPosition(xPosition);
     }
     public void setYPosition(int yPosition){
         mainGamePanel.setYPosition(yPosition);
@@ -63,6 +77,7 @@ public class MainFrame extends JFrame {
         chooseGameMode = new ChooseGameMode(actionListener);
         mainGamePanel = new MainGamePanel(this.getWidth(), this.getHeight());
         topGamePanel = new TopGamePanel();
+        tutorialPanel= new TutorialPanel(actionListener);
         this.add(namePanel, BorderLayout.NORTH);
         this.add(startingPanel);
     }

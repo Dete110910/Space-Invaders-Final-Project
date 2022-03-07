@@ -10,6 +10,7 @@ public class StartingPanel extends JPanel {
 
     private JButton playBtn;
     private JButton highScoreBtn;
+    private JButton tutorialBtn;
 
     public StartingPanel(ActionListener actionListener){
         this.setVisible(true);
@@ -24,14 +25,18 @@ public class StartingPanel extends JPanel {
         playBtn = new JButton("Play");
         playBtn.setPreferredSize(new Dimension(60,40));
         highScoreBtn = new JButton("High Score");
+        tutorialBtn= new JButton("Tutorial");
 
         playBtn.addActionListener(actionListener);
         playBtn.setActionCommand("Play");
         highScoreBtn.addActionListener(actionListener);
         highScoreBtn.setActionCommand("HighScore");
+        tutorialBtn.addActionListener(actionListener);
+        tutorialBtn.setActionCommand("Tutorial");
 
         SettingsComponents.setCharacteristicsButton(playBtn);
         SettingsComponents.setCharacteristicsButton(highScoreBtn);
+        SettingsComponents.setCharacteristicsButton(tutorialBtn);
         this.setPositions();
     }
 
@@ -41,7 +46,10 @@ public class StartingPanel extends JPanel {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.insets = new Insets(0,0,10,0);
         this.add(playBtn,gbc);
+
         this.add(highScoreBtn, gbc);
+        gbc.insets = new Insets(10,0,0,0);
+        this.add(tutorialBtn, gbc);
 
     }
 

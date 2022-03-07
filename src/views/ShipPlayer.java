@@ -16,7 +16,7 @@ public class ShipPlayer {
     }
 
     public void setxPosition(int xposition) {
-            this.xPosition += xposition;
+            this.xPosition = xposition;
     }
 
     public int getyPosition() {

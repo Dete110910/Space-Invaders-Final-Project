@@ -13,8 +13,8 @@ public class SettingsComponents {
         button.setBorder(null);
     }
 
-    public static void setCharacteristicsLabel(JLabel label){
-        label.setFont(new Font("Lucida Console", Font.PLAIN, 20));
+    public static void setCharacteristicsLabel(JLabel label, int size){
+        label.setFont(new Font("Lucida Console", Font.PLAIN, size));
         label.setForeground(Color.WHITE);
         label.setBackground(Color.BLACK);
         label.setBorder(null);
