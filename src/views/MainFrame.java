@@ -22,6 +22,7 @@ public class MainFrame extends JFrame {
         this.initComponents(actionListener, keyListener);
         this.addKeyListener(keyListener);
         this.setVisible(true);
+        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }
 
