@@ -5,13 +5,13 @@ import java.awt.*;
 
 public class MainGamePanel extends JPanel {
     private SingleShip singleShip;
-    private ShipPlayer shipPlayer;
+    private Player player;
     public MainGamePanel(int weight, int height){
         this.setVisible(true);
         this.setFocusable(true);
         this.setBackground(Color.BLACK);
         singleShip= new SingleShip(weight, height-680);
-        shipPlayer = new ShipPlayer(weight, height);
+        player = new Player(weight, height);
         System.out.println(weight);
         System.out.println(height);
         this.initComponents();
@@ -21,15 +21,18 @@ public class MainGamePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        shipPlayer.paintShipPlayer(g, this);
+        player.paintShipPlayer(g, this);
         singleShip.paintSingleShip(g, this);
 repaint();
     }
 
 
 
-    public void setXPosition(int xPosition){
-        shipPlayer.setxPosition(xPosition);
+    public void setXPositionPlayer(int xPosition){
+        player.setXPosition(xPosition);
+    }
+    public void setYPositionPlayer(int yPosition){
+        player.setYPosition(yPosition);
     }
     public void setPosition(int xPosition){
         singleShip.move(xPosition);

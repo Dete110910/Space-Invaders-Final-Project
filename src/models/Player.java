@@ -1,13 +1,22 @@
 package models;
 
 public class Player {
-    private ShipPlayer shipPlayer;
+    private Coordinates coordinates;
+    private final byte SPEED = 5;
 
-    public Player(ShipPlayer shipPlayer) {
-        this.shipPlayer = shipPlayer;
+    public Player(Coordinates coordinates) {
+        this.coordinates = coordinates;
     }
 
-    public ShipPlayer getShipPlayer() {
-        return shipPlayer;
+    public Coordinates getCoordinates() {
+        return coordinates;
     }
+    public void moveLeft(){
+        coordinates.setCoordenateX(coordinates.getCoordenateX()-SPEED);
+    }
+    public void moveRight(){
+        coordinates.setCoordenateX(coordinates.getCoordenateX()+SPEED);
+    }
+
+
 }

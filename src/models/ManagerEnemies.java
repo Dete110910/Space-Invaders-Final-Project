@@ -1,13 +1,13 @@
 package models;
 
 public class ManagerEnemies {
-    private ShipSingle shipSingle;
+    private SingleShip shipSingle;
 
-    public ManagerEnemies(ShipSingle shipSingle) {
-        this.shipSingle = shipSingle;
+    public ManagerEnemies() {
+        this.shipSingle = new SingleShip(new Coordinates(-10,10));
     }
 
-    public ShipSingle getShipSingle() {
+    public SingleShip getShipSingle() {
         return shipSingle;
     }
 }

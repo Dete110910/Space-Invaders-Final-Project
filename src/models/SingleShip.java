@@ -1,10 +1,11 @@
 package models;
 
-public class ShipSingle extends Enemy{
+public class SingleShip extends Enemy{
     private int xPosition;
     private int yPosition;
     private int  direction;
-    public ShipSingle(Coordinates coordinates) {
+
+    public SingleShip(Coordinates coordinates) {
         super(coordinates);
         this.xPosition=coordinates.getCoordenateX();
         this.yPosition=coordinates.getCoordenateY();
@@ -13,12 +14,12 @@ public class ShipSingle extends Enemy{
     @Override
     public int move() {
         defineDirection();
-        defineXposition();
+        defineXPosition();
         return  xPosition;
     }
 
     @Override
-    public void defineXposition() {
+    public void defineXPosition() {
         if(this.direction==1){
             this.xPosition= this.xPosition+20;
         }else{
