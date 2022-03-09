@@ -18,7 +18,11 @@ public class MainFrame extends JFrame {
 
     public MainFrame(ActionListener actionListener, KeyListener keyListener){
         super("Space Invaders");
+<<<<<<< HEAD
         //this.setResizable(false);
+=======
+       // this.setResizable(false);
+>>>>>>> main
         this.setFocusable(true);
         this.setSize(700,700);
         this.initComponents(actionListener, keyListener);
@@ -62,8 +66,11 @@ public class MainFrame extends JFrame {
     }
 
 
-    public void setXPosition(int xPosition){
-        mainGamePanel.setXPosition(xPosition);
+    public void setXPositionPlayer(int xPosition){
+        mainGamePanel.setXPositionPlayer(xPosition);
+    }
+    public void setYPositionPlayer(int yPosition){
+        mainGamePanel.setYPositionPlayer(yPosition);
     }
     public void setPosition(int xPosition){
         mainGamePanel.setPosition(xPosition);

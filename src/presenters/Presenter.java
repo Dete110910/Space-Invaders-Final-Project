@@ -15,6 +15,8 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
     public Presenter(){
         mainFrame = new MainFrame(this, this);
         managerGame= new ManagerGame(mainFrame.getWidth(), mainFrame.getHeight());
+        mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
+        mainFrame.setYPositionPlayer(managerGame.getYPositionPlayer());
     }
 
     @Override
@@ -53,12 +55,12 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
     @Override
     public void keyTyped(KeyEvent e) {
         if(e.getKeyChar() == 'a'){
-            mainFrame.setXPosition(managerGame.getManagerPlayer().getPlayer().getShipPlayer().move(-2));
-            //creo que no es necesario
-        }
+            managerGame.moveLeftPlayer();
+            mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
+           }
         else if(e.getKeyChar() == 'd'){
-            mainFrame.setXPosition(managerGame.getManagerPlayer().getPlayer().getShipPlayer().move(2));
-
+            managerGame.moveRightPlayer();
+            mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
         }
 
     }
@@ -67,7 +69,6 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
     public void keyReleased(KeyEvent e) {
     }
     private void initComponents(){
-
         Thread thread= new Thread(this);
         thread.start();
 
