@@ -32,9 +32,9 @@ public class ChooseGameMode extends JPanel {
         twoPlayersLAN.addActionListener(actionListener);
         twoPlayersLAN.setActionCommand("PlayTwoPlayersLAN");
 
-        SettingsComponents.setCharacteristicsButton(onePlayer);
-        SettingsComponents.setCharacteristicsButton(twoPlayers);
-        SettingsComponents.setCharacteristicsButton(twoPlayersLAN);
+        SettingsComponents.setCharacteristicsButton(onePlayer, 60);
+        SettingsComponents.setCharacteristicsButton(twoPlayers, 60);
+        SettingsComponents.setCharacteristicsButton(twoPlayersLAN, 60);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(0,20,0,20);

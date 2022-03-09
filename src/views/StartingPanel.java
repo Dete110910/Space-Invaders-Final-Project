@@ -3,7 +3,7 @@ package views;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
+
 
 public class StartingPanel extends JPanel {
 
@@ -30,8 +30,8 @@ public class StartingPanel extends JPanel {
         highScoreBtn.addActionListener(actionListener);
         highScoreBtn.setActionCommand("HighScore");
 
-        SettingsComponents.setCharacteristicsButton(playBtn);
-        SettingsComponents.setCharacteristicsButton(highScoreBtn);
+        SettingsComponents.setCharacteristicsButton(playBtn, 75);
+        SettingsComponents.setCharacteristicsButton(highScoreBtn, 75);
         this.setPositions();
     }
 
@@ -41,7 +41,9 @@ public class StartingPanel extends JPanel {
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.insets = new Insets(0,0,10,0);
         this.add(playBtn,gbc);
+
         this.add(highScoreBtn, gbc);
+        gbc.insets = new Insets(10,0,0,0);
 
     }
 

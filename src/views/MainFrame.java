@@ -12,11 +12,13 @@ public class MainFrame extends JFrame {
     private ChooseGameMode chooseGameMode;
     private MainGamePanel mainGamePanel;
     private TopGamePanel topGamePanel;
+    private TutorialPanel tutorialPanel;
+
 
 
     public MainFrame(ActionListener actionListener, KeyListener keyListener){
         super("Space Invaders");
-        this.setResizable(false);
+        //this.setResizable(false);
         this.setFocusable(true);
         this.setSize(700,700);
         this.initComponents(actionListener, keyListener);
@@ -24,21 +26,30 @@ public class MainFrame extends JFrame {
         this.setVisible(true);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-    }
 
+    }
     public void changeToMainPanel(){
         this.remove(chooseGameMode);
+        this.remove(tutorialPanel);
         SwingUtilities.updateComponentTreeUI(this);
         this.namePanel.makeVisibleBackButton(false);
+        this.namePanel.makeInvisibleTutorialButton(true);
+        this.add(namePanel, BorderLayout.NORTH);
         this.add(startingPanel);
     }
-
+    public void changeToTutorialPanel(){
+        this.remove(startingPanel);
+        this.remove(namePanel);
+        this.remove(chooseGameMode);
+        SwingUtilities.updateComponentTreeUI(this);
+        this.add(tutorialPanel);
+    }
     public void changeToSelectPlayersPanel(){
         this.remove(startingPanel);
         SwingUtilities.updateComponentTreeUI(this);
         this.namePanel.makeVisibleBackButton(true);
+        this.namePanel.makeInvisibleTutorialButton(false);
         this.add(chooseGameMode);
-
     }
 
     public void changeToOnePlayerPanel(){
@@ -50,8 +61,12 @@ public class MainFrame extends JFrame {
 
     }
 
+
     public void setXPosition(int xPosition){
         mainGamePanel.setXPosition(xPosition);
+    }
+    public void setPosition(int xPosition){
+        mainGamePanel.setPosition(xPosition);
     }
     public void setYPosition(int yPosition){
         mainGamePanel.setYPosition(yPosition);
@@ -64,6 +79,7 @@ public class MainFrame extends JFrame {
         chooseGameMode = new ChooseGameMode(actionListener);
         mainGamePanel = new MainGamePanel(this.getWidth(), this.getHeight());
         topGamePanel = new TopGamePanel();
+        tutorialPanel= new TutorialPanel(actionListener);
         this.add(namePanel, BorderLayout.NORTH);
         this.add(startingPanel);
     }
