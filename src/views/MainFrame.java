@@ -18,11 +18,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame(ActionListener actionListener, KeyListener keyListener){
         super("Space Invaders");
-<<<<<<< HEAD
-        //this.setResizable(false);
-=======
-       // this.setResizable(false);
->>>>>>> main
+        this.setResizable(false);
         this.setFocusable(true);
         this.setSize(700,700);
         this.initComponents(actionListener, keyListener);
