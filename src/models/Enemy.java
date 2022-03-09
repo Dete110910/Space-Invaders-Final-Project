@@ -1,7 +1,8 @@
 package models;
 
 public abstract class Enemy {
-private Coordinates coordinates;
+
+    private Coordinates coordinates;
     private int  direction;
     public Enemy(Coordinates coordinates) {
         this.coordinates= coordinates;
