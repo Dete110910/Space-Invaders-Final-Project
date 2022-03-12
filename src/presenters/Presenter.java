@@ -27,7 +27,7 @@ public class Presenter implements ActionListener, KeyListener,Runnable {
                 mainFrame.changeToSelectPlayersPanel();
                 break;
             case "HighScore":
-
+                System.out.println("To implement");
                 break;
             case "Back":
                 mainFrame.changeToMainPanel();
