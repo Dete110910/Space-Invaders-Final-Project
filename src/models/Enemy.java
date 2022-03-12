@@ -2,13 +2,14 @@ package models;
 
 public abstract class Enemy {
 
-    private Coordinates coordinates;
-    private int  direction;
+    protected Coordinates coordinates;
+    protected int direction;
+
     public Enemy(Coordinates coordinates) {
-        this.coordinates= coordinates;
+        this.coordinates = coordinates;
     }
 
-    public abstract int  move();
+    public abstract int move();
 
     public abstract void defineXPosition();
 

@@ -68,11 +68,11 @@ public class MainFrame extends JFrame {
     public void setYPositionPlayer(int yPosition){
         mainGamePanel.setYPositionPlayer(yPosition);
     }
-    public void setPosition(int xPosition){
-        mainGamePanel.setPosition(xPosition);
+    public void setXPositionSingleEnemy(int xPosition){
+        mainGamePanel.setXPositionSingleEnemy(xPosition);
     }
-    public void setYPosition(int yPosition){
-        mainGamePanel.setYPosition(yPosition);
+    public void setYPositionSingleEnemy(int yPosition){
+        mainGamePanel.setYPositionSingleEnemy(yPosition);
     }
 
 

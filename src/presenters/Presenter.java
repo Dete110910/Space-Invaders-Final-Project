@@ -8,20 +8,21 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Presenter implements ActionListener, KeyListener, Runnable {
+public class Presenter implements ActionListener, KeyListener,Runnable {
+
     private MainFrame mainFrame;
     private ManagerGame managerGame;
 
-    public Presenter(){
+    public Presenter() {
         mainFrame = new MainFrame(this, this);
-        managerGame= new ManagerGame(mainFrame.getWidth(), mainFrame.getHeight());
+        managerGame = new ManagerGame(mainFrame.getWidth(), mainFrame.getHeight());
         mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
         mainFrame.setYPositionPlayer(managerGame.getYPositionPlayer());
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        switch (actionEvent.getActionCommand()){
+        switch (actionEvent.getActionCommand()) {
             case "Play":
                 mainFrame.changeToSelectPlayersPanel();
                 break;
@@ -33,7 +34,9 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
                 break;
             case "PlayOnePlayer":
                 mainFrame.changeToOnePlayerPanel();
-
+                managerGame.runEnemies();
+                Thread gameThread = new Thread(this);
+                gameThread.start();
                 break;
             case "PlayTwoPlayers":
                 System.out.println("To implement");
@@ -54,11 +57,10 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if(e.getKeyChar() == 'a'){
+        if (e.getKeyChar() == 'a') {
             managerGame.moveLeftPlayer();
             mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
-           }
-        else if(e.getKeyChar() == 'd'){
+        } else if (e.getKeyChar() == 'd') {
             managerGame.moveRightPlayer();
             mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
         }
@@ -68,24 +70,18 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
     @Override
     public void keyReleased(KeyEvent e) {
     }
-    private void initComponents(){
-        Thread thread= new Thread(this);
-        thread.start();
 
-    }
 
     @Override
     public void run() {
-        while (true){
-            try{
-                Thread.sleep(300);
-            }catch (InterruptedException e){
+        while (true) {
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-           mainFrame.setPosition(managerGame.getManagerEnemies().getShipSingle().move());
-            System.out.println(managerGame.getManagerEnemies().getShipSingle().move());
-
-
+            mainFrame.setXPositionSingleEnemy(managerGame.getXPositionSingleEnemy());
+            mainFrame.setYPositionSingleEnemy(managerGame.getYPositionSingleEnemy());
         }
     }
 }
