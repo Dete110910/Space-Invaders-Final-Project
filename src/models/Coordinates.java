@@ -24,4 +24,13 @@ public class Coordinates {
     public void setCoordenateY(int coordenateY) {
         this.coordenateY = coordenateY;
     }
+
+    @Override
+    public String toString() {
+        return "Coordinates{" +
+                "coordenateX=" + coordenateX +
+                ", coordenateY=" + coordenateY +
+                '}';
+    }
+
 }

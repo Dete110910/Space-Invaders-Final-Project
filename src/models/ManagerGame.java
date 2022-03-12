@@ -3,13 +3,13 @@ package models;
 public class ManagerGame {
     private ManagerEnemies managerEnemies;
     private ManagerPlayer managerPlayer;
-    private final int ZERO =0;
+    private final int ZERO = 0;
     private int limitX;
     private int limitY;
 
     public ManagerGame(int width, int height) {
-        managerEnemies= new ManagerEnemies();
-        managerPlayer= new ManagerPlayer(width,height);
+        managerEnemies = new ManagerEnemies();
+        managerPlayer = new ManagerPlayer(width, height);
         limitX = width;
         limitY = height;
     }
@@ -22,20 +22,36 @@ public class ManagerGame {
         return managerPlayer;
     }
 
-    public  int getXPositionPlayer(){
+    public int getXPositionPlayer() {
         return managerPlayer.getCoordinates().getCoordenateX();
     }
-    public  int getYPositionPlayer(){
+
+    public int getYPositionPlayer() {
         return managerPlayer.getCoordinates().getCoordenateY();
     }
-    public void moveLeftPlayer(){
-        if (getXPositionPlayer() > ZERO){
+
+    public int getXPositionSingleEnemy() {
+        return managerEnemies.getXPositionSingleEnemy();
+    }
+
+    public int getYPositionSingleEnemy() {
+        return managerEnemies.getYPositionSingleEnemy();
+    }
+
+    public void moveLeftPlayer() {
+        if (getXPositionPlayer() > ZERO) {
             managerPlayer.moveLeft();
         }
     }
-    public void moveRightPlayer(){
-        if (getXPositionPlayer() < limitY){
+
+    public void moveRightPlayer() {
+        if (getXPositionPlayer() < limitY) {
             managerPlayer.moveRight();
         }
+    }
+
+    public void runEnemies() {
+        Thread enemiesThread = new Thread(managerEnemies);
+        enemiesThread.start();
     }
 }
