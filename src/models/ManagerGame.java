@@ -1,5 +1,7 @@
 package models;
 
+import java.util.ArrayList;
+
 public class ManagerGame {
     private ManagerEnemies managerEnemies;
     private ManagerPlayer managerPlayer;
@@ -53,5 +55,8 @@ public class ManagerGame {
     public void runEnemies() {
         Thread enemiesThread = new Thread(managerEnemies);
         enemiesThread.start();
+    }
+    public ArrayList<ArrayList<ArrayList<Integer>>> getInformationInvaders(){
+        return managerEnemies.getInformationInvaders();
     }
 }

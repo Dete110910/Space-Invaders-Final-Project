@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
 
@@ -87,4 +88,7 @@ public class MainFrame extends JFrame {
         this.add(startingPanel);
     }
 
+    public void setInformationInvaders(ArrayList<ArrayList<ArrayList<Integer>>> informationList){
+       mainGamePanel.setInformationInvader(informationList);
+    }
 }

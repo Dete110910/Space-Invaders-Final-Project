@@ -2,6 +2,7 @@ package views;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainGamePanel extends JPanel {
@@ -23,33 +24,10 @@ public class MainGamePanel extends JPanel {
 
     }
 
-    public void createInvadersList() {
-        for (int i = 0, w = 40; i < 3; i++, w += 40) {
-            ArrayList<Invader> auxInvaderList = new ArrayList<>();
-            for (int j = 0, k = 40; j < 7; j++, k += 40) {
-                switch (i) {
-                    case 0:
-                        Invader invader = new Invader(i + k, j + w, SOURCE_DIFFICULT_ENEMY);
-                        auxInvaderList.add(invader);
-                        break;
-                    case 1:
-                        invader = new Invader(i + k, j + w, SOURCE_NORMAL_ENEMY);
-                        auxInvaderList.add(invader);
-                        break;
-                    case 2:
-                        invader = new Invader(i + k, j + w, SOURCE_BASIC_ENEMY);
-                        auxInvaderList.add(invader);
-                        break;
-                }
-            }
-            invadersList.add(auxInvaderList);
-        }
-    }
 
-    public void printGroupEnemies(Graphics g){
-        this.createInvadersList();
-        for(int i = 0; i < invadersList.size(); i++){
-            for(int j = 0; j < invadersList.get(i).size(); j++){
+    public synchronized void printGroupEnemies(Graphics g) {
+        for (int i = 0; i < invadersList.size(); i++) {
+            for (int j = 0; j < invadersList.get(i).size(); j++) {
                 invadersList.get(i).get(j).paintInvader(g, this);
             }
         }
@@ -63,8 +41,6 @@ public class MainGamePanel extends JPanel {
         this.printGroupEnemies(g);
         repaint();
     }
-
-
 
 
     public void setXPositionPlayer(int xPosition) {
@@ -91,4 +67,31 @@ public class MainGamePanel extends JPanel {
     }
 
 
+    public synchronized void setInformationInvader(ArrayList<ArrayList<ArrayList<Integer>>> informationList) {
+        invadersList.clear();
+        for (ArrayList<ArrayList<Integer>> informationRows : informationList) {
+            ArrayList<Invader> invaderRowList = new ArrayList<>();
+            for (ArrayList<Integer> informationInvader : informationRows) {
+                Invader invader = new Invader(informationInvader.get(0), informationInvader.get(1), (informationInvader.get(2) == 0) ? false : true,
+                        this.defineTypeInvader(informationInvader.get(3)));
+                invaderRowList.add(invader);
+            }
+            invadersList.add(invaderRowList);
+        }
+    }
+
+    public String defineTypeInvader(int type) {
+        switch (type) {
+            case 0:
+                return SOURCE_BASIC_ENEMY;
+            case 1:
+                return SOURCE_NORMAL_ENEMY;
+            case 2:
+                return SOURCE_DIFFICULT_ENEMY;
+
+            default:
+                return SOURCE_NORMAL_ENEMY;
+        }
+
+    }
 }

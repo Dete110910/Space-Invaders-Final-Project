@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class Presenter implements ActionListener, KeyListener,Runnable {
 
@@ -37,6 +38,7 @@ public class Presenter implements ActionListener, KeyListener,Runnable {
                 managerGame.runEnemies();
                 Thread gameThread = new Thread(this);
                 gameThread.start();
+
                 break;
             case "PlayTwoPlayers":
                 System.out.println("To implement");
@@ -80,8 +82,17 @@ public class Presenter implements ActionListener, KeyListener,Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            mainFrame.setXPositionSingleEnemy(managerGame.getXPositionSingleEnemy());
-            mainFrame.setYPositionSingleEnemy(managerGame.getYPositionSingleEnemy());
+            this.controlSingleEnemy();
+            this.controlGroupEnemies();
+
         }
     }
+    private void controlSingleEnemy(){
+        mainFrame.setXPositionSingleEnemy(managerGame.getXPositionSingleEnemy());
+        mainFrame.setYPositionSingleEnemy(managerGame.getYPositionSingleEnemy());
+    }
+    private void controlGroupEnemies(){
+        mainFrame.setInformationInvaders(managerGame.getInformationInvaders());
+    }
+
 }
