@@ -1,20 +1,29 @@
 package models;
 
-public class Bullet implements Runnable {
-    private Coordinates coordinates;
-    private final byte VELOCITY = 30;
+public abstract class Bullet implements Runnable {
+    protected Coordinates coordinates;
+    protected boolean isCrashed;
+    protected static final byte VELOCITY = 30;
 
     public Bullet(Coordinates coordinates) {
+        this.isCrashed = false;
         this.coordinates = coordinates;
     }
 
-    public void move() {
-        if (coordinates.getCoordenateY() >= 0)
-            coordinates.setCoordenateY(coordinates.getCoordenateY() - VELOCITY);
-    }
+    public abstract void move();
+
+    public abstract void verifyIsCrashes();
 
     @Override
     public void run() {
-        this.move();
+        while (!isCrashed){
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            this.move();
+            this.verifyIsCrashes();
+        }
     }
 }

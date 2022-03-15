@@ -20,9 +20,9 @@ public class Invader {
     public void paintInvader(Graphics graphics, MainGamePanel mainGamePanel) {
         if (isVisible) {
             Graphics2D g2d = (Graphics2D) graphics;
-            ImageIcon singleShip = new ImageIcon(this.src);
-            Image iSingleShip = singleShip.getImage();
-            g2d.drawImage(iSingleShip, xPosition, yPosition, mainGamePanel);
+            ImageIcon invader = new ImageIcon(this.src);
+            Image iInvader = invader.getImage();
+            g2d.drawImage(iInvader, xPosition, yPosition, mainGamePanel);
         }
 
     }

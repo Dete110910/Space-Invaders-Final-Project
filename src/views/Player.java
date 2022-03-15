@@ -19,10 +19,10 @@ public class Player {
         this.yPosition = yPosition;
     }
 
-    public void paintShipPlayer(Graphics graphics, MainGamePanel mainGamePanel){
+    public void paintPlayer(Graphics graphics, MainGamePanel mainGamePanel){
         Graphics2D g2d = (Graphics2D) graphics;
         ImageIcon shipPlayer = new ImageIcon("src/rsc/player.png");
-        Image IshipPlayer= shipPlayer.getImage();
-        g2d.drawImage(IshipPlayer, xPosition,yPosition, mainGamePanel);
+        Image iShipPlayer= shipPlayer.getImage();
+        g2d.drawImage(iShipPlayer, xPosition,yPosition, mainGamePanel);
     }
 }

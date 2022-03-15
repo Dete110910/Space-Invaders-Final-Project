@@ -91,4 +91,17 @@ public class MainFrame extends JFrame {
     public void setInformationInvaders(ArrayList<ArrayList<ArrayList<Integer>>> informationList){
        mainGamePanel.setInformationInvader(informationList);
     }
+
+    public void setXPositionPlayerBullet(int xPositionBullet) {
+        mainGamePanel.setXPositionPlayerBullet(xPositionBullet);
+    }
+
+    public void setYPositionPlayerBullet(int yPositionBullet) {
+        mainGamePanel.setYPositionPlayerBullet(yPositionBullet);
+    }
+
+    public void setIsVisiblePlayerBullet(boolean isVisibleBullet) {
+        mainGamePanel.setIsVisiblePlayerBullet(isVisibleBullet);
+    }
+
 }

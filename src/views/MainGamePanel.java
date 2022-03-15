@@ -2,13 +2,13 @@ package views;
 
 import javax.swing.*;
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class MainGamePanel extends JPanel {
 
     private SingleEnemy singleEnemy;
     private Player player;
+    private Bullet playerBullet;
     private ArrayList<ArrayList<Invader>> invadersList;
     private final String SOURCE_BASIC_ENEMY = "src/rsc/enemyBasic.png";
     private final String SOURCE_NORMAL_ENEMY = "src/rsc/enemyNormal.png";
@@ -18,8 +18,6 @@ public class MainGamePanel extends JPanel {
         this.setVisible(true);
         this.setFocusable(true);
         this.setBackground(Color.BLACK);
-        System.out.println(weight);
-        System.out.println(height);
         this.initComponents(weight, height);
 
     }
@@ -36,8 +34,9 @@ public class MainGamePanel extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        player.paintShipPlayer(g, this);
-        singleEnemy.paintSingleShip(g, this);
+        player.paintPlayer(g, this);
+        singleEnemy.paintSingleEnemy(g, this);
+        playerBullet.paintBullet(g,this);
         this.printGroupEnemies(g);
         repaint();
     }
@@ -64,6 +63,7 @@ public class MainGamePanel extends JPanel {
         singleEnemy = new SingleEnemy(weight, height - 680);
         player = new Player(weight, height);
         invadersList = new ArrayList<>();
+        playerBullet = new Bullet(0,0, false);
     }
 
 
@@ -93,5 +93,16 @@ public class MainGamePanel extends JPanel {
                 return SOURCE_NORMAL_ENEMY;
         }
 
+    }
+
+    public void setXPositionPlayerBullet(int xPositionBullet) {
+        playerBullet.setXPosition(xPositionBullet);
+    }
+    public void setYPositionPlayerBullet(int yPositionBullet) {
+        playerBullet.setYPosition(yPositionBullet);
+    }
+
+    public void setIsVisiblePlayerBullet(boolean isVisibleBullet) {
+        playerBullet.setVisible(isVisibleBullet);
     }
 }
