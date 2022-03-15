@@ -24,18 +24,22 @@ public class ManagerEnemies implements Runnable {
     public  int getYPositionSingleEnemy(){
         return singleEnemy.getYPosition();
     }
-
+    public ArrayList<ArrayList<ArrayList<Integer>>> getInformationInvaders(){
+        return groupEnemies.getInformationInvaders();
+    }
 
     @Override
     public void run() {
+        Thread singleInvaderThread = new Thread(this.singleEnemy);
+        singleInvaderThread.start();
         while (true) {
             try {
                 Thread.sleep(300);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            singleEnemy.move();
             groupEnemies.move();
         }
     }
+
 }

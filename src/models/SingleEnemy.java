@@ -1,8 +1,8 @@
 package models;
 
-public class SingleEnemy extends Enemy {
+public class SingleEnemy extends Enemy implements  Runnable {
 
-    private static final byte VELOCITY = 20;
+    private static final byte VELOCITY = 30;
 
     public SingleEnemy(Coordinates coordinates) {
         super(coordinates);
@@ -40,5 +40,17 @@ public class SingleEnemy extends Enemy {
 
     public int getYPosition() {
         return coordinates.getCoordenateY();
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            this.move();
+        }
     }
 }
