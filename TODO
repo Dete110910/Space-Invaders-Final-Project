@@ -1,10 +1,10 @@
 0. Back button (done)
-1. Create bullets
-2. Make collitions between bullets and invaders (and the finish this when this happend and get out of the frame)
-3. Make invaders with both movements (vertical and horizontal)
+1. Create bullets (done)
+2. Make collitions between bullets and invaders (and the finish this when this happen and get out of the frame)
+3. Make invaders with both movements (vertical and horizontal) (done)
   3a. Make faster the horizontal movements when a invader dies
-4. Make the different types of invaders
-5. Make the score of the player 
+4. Make the different types of invaders (done)
+5. Make the score of the player
 6. Make the write of the highest scores (and make the interface of this in the initial frame)
 7. Make the multiplayer
 
@@ -12,4 +12,4 @@
 8. Make the UNIT TEST
 
 Aditional:
-1. Fonts
+1. Fonts (done)

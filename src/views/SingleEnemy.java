@@ -12,11 +12,11 @@ public class SingleEnemy {
         this.yPosition = yPosition;
     }
 
-    public void paintSingleShip(Graphics graphics, MainGamePanel mainGamePanel) {
+    public void paintSingleEnemy(Graphics graphics, MainGamePanel mainGamePanel) {
         Graphics2D g2d = (Graphics2D) graphics;
-        ImageIcon singleShip = new ImageIcon("src/rsc/SingleShip.png");
-        Image iSingleShip = singleShip.getImage();
-        g2d.drawImage(iSingleShip, xPosition, yPosition, mainGamePanel);
+        ImageIcon singleEnemy = new ImageIcon("src/rsc/SingleShip.png");
+        Image iSingleEnemy = singleEnemy.getImage();
+        g2d.drawImage(iSingleEnemy, xPosition, yPosition, mainGamePanel);
 
     }
 

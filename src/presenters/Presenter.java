@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class Presenter implements ActionListener, KeyListener,Runnable {
+public class Presenter implements ActionListener, KeyListener, Runnable {
 
     private MainFrame mainFrame;
     private ManagerGame managerGame;
@@ -27,12 +27,13 @@ public class Presenter implements ActionListener, KeyListener,Runnable {
                 mainFrame.changeToSelectPlayersPanel();
                 break;
             case "HighScore":
-                System.out.println("To implement");
+                mainFrame.changeToHighScoresPanel();
                 break;
             case "Back":
                 mainFrame.changeToMainPanel();
                 break;
             case "PlayOnePlayer":
+                managerGame.setPlaying(true);
                 mainFrame.changeToOnePlayerPanel();
                 managerGame.runEnemies();
                 Thread gameThread = new Thread(this);
@@ -52,18 +53,22 @@ public class Presenter implements ActionListener, KeyListener,Runnable {
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (managerGame.isPlaying())
+            if (e.getKeyChar() == 'a') {
+                managerGame.moveLeftPlayer();
+                mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
+            } else if (e.getKeyChar() == 'd') {
+                managerGame.moveRightPlayer();
+                mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
+            } else if (e.getKeyChar() == ' ') {
+                managerGame.createPlayerBullet();
+                this.controlBulletPlayer();
+            }
 
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (e.getKeyChar() == 'a') {
-            managerGame.moveLeftPlayer();
-            mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
-        } else if (e.getKeyChar() == 'd') {
-            managerGame.moveRightPlayer();
-            mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
-        }
 
     }
 
@@ -80,8 +85,29 @@ public class Presenter implements ActionListener, KeyListener,Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            mainFrame.setXPositionSingleEnemy(managerGame.getXPositionSingleEnemy());
-            mainFrame.setYPositionSingleEnemy(managerGame.getYPositionSingleEnemy());
+            this.controlSingleEnemy();
+            this.controlGroupEnemies();
+            this.controlBulletPlayer();
         }
     }
+
+    private void controlBulletPlayer() {
+        if(!managerGame.getIsCrashedPlayerBullet()) {
+            mainFrame.setXPositionPlayerBullet(managerGame.getXPositionPlayerBullet());
+            mainFrame.setYPositionPlayerBullet(managerGame.getYPositionPlayerBullet());
+            mainFrame.setIsVisiblePlayerBullet(!managerGame.getIsCrashedPlayerBullet());
+        }else{
+            mainFrame.setIsVisiblePlayerBullet(false);
+        }
+    }
+
+    private void controlSingleEnemy() {
+        mainFrame.setXPositionSingleEnemy(managerGame.getXPositionSingleEnemy());
+        mainFrame.setYPositionSingleEnemy(managerGame.getYPositionSingleEnemy());
+    }
+
+    private void controlGroupEnemies() {
+        mainFrame.setInformationInvaders(managerGame.getInformationInvaders());
+    }
+
 }
