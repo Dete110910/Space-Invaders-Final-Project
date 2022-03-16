@@ -39,9 +39,8 @@ public class GroupEnemies {
     }
 
     private Coordinates verifyLast() {
-        boolean isLive = false;
         if (direction == 1) {
-            for (int i = invadersList.size() - 1; i >= 0; i--) {
+            for (int i = invadersList.size() - 1; i >= 0; i--) { //¿menos 1?
                 for (int j = 0; j < invadersList.get(i).size(); j++) {
                     if (!invadersList.get(i).get(j).isDead()) {
                         return invadersList.get(i).get(j).getCoordinates();
@@ -49,7 +48,7 @@ public class GroupEnemies {
                 }
             }
         } else {
-            for (int i = 0; i < invadersList.size() - 1; i++) {
+            for (int i = 0; i < invadersList.size() - 1; i++) { //¿menos 1?
                 for (int j = 0; j < invadersList.get(i).size(); j++) {
                     if (!invadersList.get(i).get(j).isDead()) {
                         return invadersList.get(i).get(j).getCoordinates();
