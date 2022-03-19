@@ -1,29 +1,54 @@
 package models;
 
+import java.util.ArrayList;
+
 public abstract class Bullet implements Runnable {
     protected Coordinates coordinates;
     protected boolean isCrashed;
-    protected static final byte VELOCITY = 30;
+    protected static final byte VELOCITY = 10;
 
     public Bullet(Coordinates coordinates) {
-        this.isCrashed = false;
+        this.isCrashed = true;
         this.coordinates = coordinates;
     }
 
     public abstract void move();
 
-    public abstract void verifyIsCrashes();
+    public abstract ArrayList<Coordinates> calculateCoordinates();
 
     @Override
     public void run() {
-        while (!isCrashed){
+        while (!isCrashed) {
             try {
-                Thread.sleep(300);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             this.move();
-            this.verifyIsCrashes();
         }
+        System.out.println("se termino el hilo en bala :v ");
+    }
+
+    public synchronized Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public synchronized void setCoordinates(Coordinates coordinates){
+        this.coordinates = coordinates;
+    }
+    public  boolean getIsCrashed() {
+        return isCrashed;
+    }
+
+    public void setIsCrashed(boolean isCrashed){
+        this.isCrashed = isCrashed;
+    }
+
+    @Override
+    public String toString() {
+        return "Bullet{" +
+                "coordinates=" + coordinates +
+                ", isCrashed=" + isCrashed +
+                '}';
     }
 }

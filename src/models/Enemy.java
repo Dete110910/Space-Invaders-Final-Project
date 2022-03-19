@@ -1,5 +1,7 @@
 package models;
 
+import java.util.ArrayList;
+
 public abstract class Enemy {
 
     protected Coordinates coordinates;
@@ -11,7 +13,6 @@ public abstract class Enemy {
 
     public abstract int move();
 
-    public abstract void defineXPosition();
 
-    public abstract void defineDirection();
+    public abstract boolean verifyCollition(ArrayList<Coordinates> coordinates);
 }

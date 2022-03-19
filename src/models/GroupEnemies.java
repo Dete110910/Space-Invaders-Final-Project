@@ -9,7 +9,8 @@ public class GroupEnemies {
     private final byte SPACE_BETWEEN_INVADERS = 25;
     private final byte INIT_COORDINATE_X_ENEMY = 20;
     private final byte INIT_COORDINATE_Y_ENEMY = 50;
-    private final byte VELOCITY_ENEMY = 20;
+    private final byte VELOCITY_ENEMY = 5;
+    private final byte VELOCITY_ENEMY_Y = 5;
     private byte direction;
     private ArrayList<ArrayList<Invader>> invadersList;
 
@@ -43,8 +44,8 @@ public class GroupEnemies {
     private Coordinates verifyLast() {
         if (direction == 1) {
             for (int i = invadersList.size() - 1; i >= 0; i--) { //¿menos 1?
-                for (int j = 0; j < invadersList.get(i).size(); j++) {
-                    if (!invadersList.get(i).get(j).isDead()) {
+                for (int j = invadersList.get(i).size()-1; j >=0; j--) {
+                    if (!invadersList.get(i).get(j).getIsDead()) {
                         return invadersList.get(i).get(j).getCoordinates();
                     }
                 }
@@ -52,7 +53,7 @@ public class GroupEnemies {
         } else {
             for (ArrayList<Invader> invaders : invadersList) {
                 for (Invader invader : invaders) {
-                    if (!invader.isDead()) {
+                    if (!invader.getIsDead()) {
                         return invader.getCoordinates();
                     }
                 }
@@ -76,7 +77,7 @@ public class GroupEnemies {
     }
 
     private void defineXPosition() {
-        int aux =  VELOCITY_ENEMY;
+        int aux = VELOCITY_ENEMY;
         if (direction == 0) {
             aux *= -1;
         }
@@ -88,15 +89,30 @@ public class GroupEnemies {
     }
 
     private void defineYPosition(int direction) {
-        if ( this.direction != direction) {
+        if (this.direction != direction) {
             for (ArrayList<Invader> rowList : invadersList) {
                 for (Invader invader : rowList) {
-                    invader.setYCoordinates(invader.getCoordinates().getCoordenateY() + SPACE_BETWEEN_INVADERS);
+                    invader.setYCoordinates(invader.getCoordinates().getCoordenateY() + VELOCITY_ENEMY_Y);
                 }
             }
-            this.direction = (byte)direction;
+            this.direction = (byte) direction;
         }
 
+    }
+
+    public boolean verifyIsCrashed(ArrayList<Coordinates> coordinatesBullet) {
+        for (int i = 0; i < invadersList.size(); i++) {
+            for (int j = 0; j < invadersList.get(i).size(); j++) {
+                if (!invadersList.get(i).get(j).getIsDead()) {
+                    if (invadersList.get(i).get(j).verifyCollition(coordinatesBullet)) {
+                        System.out.println("Entro en group Enemies");
+                        invadersList.get(i).get(j).setDead(true);
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public ArrayList<ArrayList<ArrayList<Integer>>> getInformationInvaders() {
@@ -107,7 +123,7 @@ public class GroupEnemies {
                 ArrayList<Integer> informationInvader = new ArrayList<>();
                 informationInvader.add(invader.getCoordinates().getCoordenateX());
                 informationInvader.add(invader.getCoordinates().getCoordenateY());
-                informationInvader.add((invader.isDead()) ? 0 : 1);
+                informationInvader.add((invader.getIsDead()) ? 0 : 1);
                 informationInvader.add(invader.getType().getType());
                 informationRowList.add(informationInvader);
             }

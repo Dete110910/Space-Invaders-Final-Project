@@ -1,5 +1,6 @@
 package views;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ public class MainGamePanel extends JPanel {
 
     private SingleEnemy singleEnemy;
     private Player player;
-    private Bullet playerBullet;
+    private Bullet[] playerBullets;
     private ArrayList<ArrayList<Invader>> invadersList;
     private final String SOURCE_BASIC_ENEMY = "src/rsc/enemyBasic.png";
     private final String SOURCE_NORMAL_ENEMY = "src/rsc/enemyNormal.png";
@@ -19,7 +20,7 @@ public class MainGamePanel extends JPanel {
         this.setFocusable(true);
         this.setBackground(Color.BLACK);
         this.initComponents(weight, height);
-
+        this.playerBullets = new Bullet[3];
     }
 
 
@@ -36,9 +37,16 @@ public class MainGamePanel extends JPanel {
         super.paintComponent(g);
         player.paintPlayer(g, this);
         singleEnemy.paintSingleEnemy(g, this);
-        playerBullet.paintBullet(g,this);
         this.printGroupEnemies(g);
+        this.printBullets(g);
         repaint();
+    }
+
+    private void printBullets(Graphics g) {
+        for (Bullet bullet : playerBullets) {
+            if(bullet != null)
+                bullet.paintBullet(g, this);
+        }
     }
 
 
@@ -63,7 +71,8 @@ public class MainGamePanel extends JPanel {
         singleEnemy = new SingleEnemy(weight, height - 680);
         player = new Player(weight, height);
         invadersList = new ArrayList<>();
-        playerBullet = new Bullet(0,0, false);
+
+
     }
 
 
@@ -95,14 +104,11 @@ public class MainGamePanel extends JPanel {
 
     }
 
-    public void setXPositionPlayerBullet(int xPositionBullet) {
-        playerBullet.setXPosition(xPositionBullet);
-    }
-    public void setYPositionPlayerBullet(int yPositionBullet) {
-        playerBullet.setYPosition(yPositionBullet);
+
+    public void setInformationBullets(ArrayList<ArrayList<Integer>> informationBullets) {
+        for (int i = 0; i < informationBullets.size(); i++) {
+            playerBullets[i] = new Bullet(informationBullets.get(i).get(0), informationBullets.get(i).get(1), (informationBullets.get(i).get(i) == 0) ? false : true);
+        }
     }
 
-    public void setIsVisiblePlayerBullet(boolean isVisibleBullet) {
-        playerBullet.setVisible(isVisibleBullet);
-    }
 }

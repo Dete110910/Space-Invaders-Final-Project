@@ -28,13 +28,17 @@ public class ManagerEnemies implements Runnable {
         return groupEnemies.getInformationInvaders();
     }
 
+    public boolean verifyCollitions(ArrayList<Coordinates> coordinatesBullet){
+        return this.groupEnemies.verifyIsCrashed(coordinatesBullet);
+    }
+
     @Override
     public void run() {
         Thread singleInvaderThread = new Thread(this.singleEnemy);
         singleInvaderThread.start();
         while (true) {
             try {
-                Thread.sleep(300);
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
