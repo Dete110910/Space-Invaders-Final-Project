@@ -2,14 +2,14 @@ package models;
 
 import java.util.ArrayList;
 
-public class ManagerGame {
+public class ManagerGame implements Runnable {
     private boolean isPlaying;
     private ManagerEnemies managerEnemies;
     private ManagerPlayer managerPlayer;
     private final int ZERO = 0;
     private int limitX;
     private int limitY;
-    private Bullet playerBullet;
+    private PlayerBullet[] playerBullets;
 
     public ManagerGame(int width, int height) {
         managerEnemies = new ManagerEnemies();
@@ -17,6 +17,14 @@ public class ManagerGame {
         limitX = width;
         limitY = height;
         isPlaying = false;
+        playerBullets = new PlayerBullet[3];
+        this.initBullets();
+    }
+
+    private void initBullets() {
+        for (int i = 0; i < playerBullets.length; i++) {
+            playerBullets[i] = new PlayerBullet();
+        }
     }
 
     public ManagerEnemies getManagerEnemies() {
@@ -73,21 +81,54 @@ public class ManagerGame {
     }
 
     public void createPlayerBullet() {
-        if(playerBullet == null || playerBullet.isCrashed) {
-            playerBullet = new PlayerBullet(new Coordinates(managerPlayer.getCoordinates().getCoordenateX()+28,managerPlayer.getCoordinates().getCoordenateY()));
-            Thread bulletThread = new Thread(playerBullet);
-            bulletThread.start();
+        boolean isNotShot = true;
+        for (int i = 0; i < playerBullets.length && isNotShot; i++) {
+            if (playerBullets[i].isCrashed) {
+                playerBullets[i] = new PlayerBullet(new Coordinates(managerPlayer.getCoordinates().getCoordenateX() + 28, managerPlayer.getCoordinates().getCoordenateY()));
+                Thread bulletThread = new Thread(playerBullets[i]);
+                bulletThread.start();
+                isNotShot = false;
+            }
         }
     }
 
-    public boolean getIsCrashedPlayerBullet() {
-        return (playerBullet == null)?true:playerBullet.isCrashed;
+    public ArrayList<ArrayList<Integer>> getInformationPLayerBullets() {
+        ArrayList<ArrayList<Integer>> informationBullets = new ArrayList<>();
+        for (PlayerBullet playerBullet : playerBullets) {
+            ArrayList<Integer> informationBullet = new ArrayList<>();
+            informationBullet.add(playerBullet.coordinates.getCoordenateX());
+            informationBullet.add(playerBullet.coordinates.getCoordenateY());
+            informationBullet.add((playerBullet.isCrashed) ? 0 : 1);
+            informationBullets.add(informationBullet);
+        }
+
+        return informationBullets;
     }
 
-    public int getXPositionPlayerBullet() {
-       return this.playerBullet.coordinates.getCoordenateX();
+    public void verifyCollitions(){
+        for(PlayerBullet playerBullet : playerBullets){
+            playerBullet.isCrashed =  this.managerEnemies.verifyCollitions(playerBullet.calculateCoordinates());
+        }
     }
-    public int getYPositionPlayerBullet() {
-        return this.playerBullet.coordinates.getCoordenateY();
+
+    private boolean verifyNotIsCrashed() {
+        for (PlayerBullet playerBullet : playerBullets) {
+            if (playerBullet.isCrashed == false)
+                return true;
+        }
+        return false;
+
+    }
+    @Override
+    public void run() {
+        while (this.verifyNotIsCrashed()) {
+            System.out.println(" aquí ");
+            try {
+                Thread.sleep(509);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            this.verifyCollitions();
+        }
     }
 }

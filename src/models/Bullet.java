@@ -1,9 +1,11 @@
 package models;
 
+import java.util.ArrayList;
+
 public abstract class Bullet implements Runnable {
     protected Coordinates coordinates;
     protected boolean isCrashed;
-    protected static final byte VELOCITY = 30;
+    protected static final byte VELOCITY = 5;
 
     public Bullet(Coordinates coordinates) {
         this.isCrashed = false;
@@ -14,16 +16,22 @@ public abstract class Bullet implements Runnable {
 
     public abstract void verifyIsCrashes();
 
+    public abstract ArrayList<Coordinates> calculateCoordinates();
+
     @Override
     public void run() {
         while (!isCrashed){
             try {
-                Thread.sleep(300);
+                Thread.sleep(25);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+
             this.move();
             this.verifyIsCrashes();
         }
     }
+
+
 }

@@ -12,12 +12,14 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
 
     private MainFrame mainFrame;
     private ManagerGame managerGame;
+    private Thread threadManagerGame;
 
     public Presenter() {
         mainFrame = new MainFrame(this, this);
         managerGame = new ManagerGame(mainFrame.getWidth(), mainFrame.getHeight());
         mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
         mainFrame.setYPositionPlayer(managerGame.getYPositionPlayer());
+        this.threadManagerGame = new Thread(managerGame);
     }
 
     @Override
@@ -63,6 +65,13 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
             } else if (e.getKeyChar() == ' ') {
                 managerGame.createPlayerBullet();
                 this.controlBulletPlayer();
+                if (Thread.State.NEW == threadManagerGame.getState()){
+                     threadManagerGame.start();
+                    System.out.println("me comencé");
+                }else if ( Thread.State.TERMINATED == threadManagerGame.getState()){
+                    threadManagerGame = new Thread(managerGame);
+                    System.out.println("soy nuevo en el presenter ");
+                }
             }
 
     }
@@ -79,9 +88,10 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
 
     @Override
     public void run() {
+
         while (true) {
             try {
-                Thread.sleep(200);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -92,13 +102,8 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
     }
 
     private void controlBulletPlayer() {
-        if(!managerGame.getIsCrashedPlayerBullet()) {
-            mainFrame.setXPositionPlayerBullet(managerGame.getXPositionPlayerBullet());
-            mainFrame.setYPositionPlayerBullet(managerGame.getYPositionPlayerBullet());
-            mainFrame.setIsVisiblePlayerBullet(!managerGame.getIsCrashedPlayerBullet());
-        }else{
-            mainFrame.setIsVisiblePlayerBullet(false);
-        }
+        mainFrame.setInformationBullets(managerGame.getInformationPLayerBullets());
+
     }
 
     private void controlSingleEnemy() {

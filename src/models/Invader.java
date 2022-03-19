@@ -1,5 +1,7 @@
 package models;
 
+import java.util.ArrayList;
+
 public class Invader extends Enemy {
 
     public static final byte WIDTH = 40;
@@ -13,7 +15,7 @@ public class Invader extends Enemy {
         this.type = type;
     }
 
-    public boolean isDead() {
+    public boolean getIsDead() {
         return isDead;
     }
 
@@ -46,15 +48,18 @@ public class Invader extends Enemy {
         return 0;
     }
 
-    @Override
-    public void defineXPosition() {
-
-    }
 
     @Override
-    public void defineDirection() {
-
+    public boolean verifyCollition(ArrayList<Coordinates> coordinates) {
+        if(this.coordinates.getCoordenateX() <= coordinates.get(0).getCoordenateX()
+                && this.coordinates.getCoordenateX() + WIDTH >= coordinates.get(1).getCoordenateX()
+                && this.coordinates.getCoordenateY() <= coordinates.get(0).getCoordenateY()
+                && this.coordinates.getCoordenateY() >= coordinates.get(1).getCoordenateY())
+                return true;
+        return false;
     }
+
+
 
     @Override
     public String toString() {
