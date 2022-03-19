@@ -38,7 +38,7 @@ public class ManagerEnemies implements Runnable {
         singleInvaderThread.start();
         while (true) {
             try {
-                Thread.sleep(50);
+                Thread.sleep(250);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

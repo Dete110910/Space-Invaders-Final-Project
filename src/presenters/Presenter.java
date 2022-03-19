@@ -63,8 +63,8 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
                 managerGame.moveRightPlayer();
                 mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
             } else if (e.getKeyChar() == ' ') {
-                managerGame.createPlayerBullet();
-                this.controlBulletPlayer();
+
+                managerGame.createPlayerBullets();
                 if (Thread.State.NEW == threadManagerGame.getState()){
                      threadManagerGame.start();
                     System.out.println("me comencé");

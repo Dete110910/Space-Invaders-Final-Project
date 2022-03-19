@@ -51,14 +51,14 @@ public class Invader extends Enemy {
 
     @Override
     public boolean verifyCollition(ArrayList<Coordinates> coordinates) {
-        if(this.coordinates.getCoordenateX() <= coordinates.get(0).getCoordenateX()
-                && this.coordinates.getCoordenateX() + WIDTH >= coordinates.get(1).getCoordenateX()
-                && this.coordinates.getCoordenateY() <= coordinates.get(0).getCoordenateY()
-                && this.coordinates.getCoordenateY() >= coordinates.get(1).getCoordenateY())
+        if (!this.getIsDead())
+            if (this.coordinates.getCoordenateX() <= coordinates.get(0).getCoordenateX()
+                    && this.coordinates.getCoordenateX() + WIDTH >= coordinates.get(1).getCoordenateX()
+                    && this.coordinates.getCoordenateY() <= coordinates.get(0).getCoordenateY()
+                    && this.coordinates.getCoordenateY() + HEIGHT >= coordinates.get(1).getCoordenateY())
                 return true;
         return false;
     }
-
 
 
     @Override

@@ -80,15 +80,19 @@ public class ManagerGame implements Runnable {
         isPlaying = playing;
     }
 
-    public void createPlayerBullet() {
+    public void createPlayerBullets() {
         boolean isNotShot = true;
         for (int i = 0; i < playerBullets.length && isNotShot; i++) {
-            if (playerBullets[i].isCrashed) {
+            if (playerBullets[i].getIsCrashed()) {
                 playerBullets[i] = new PlayerBullet(new Coordinates(managerPlayer.getCoordinates().getCoordenateX() + 28, managerPlayer.getCoordinates().getCoordenateY()));
+                playerBullets[i].setIsCrashed(false);
                 Thread bulletThread = new Thread(playerBullets[i]);
                 bulletThread.start();
                 isNotShot = false;
             }
+        }
+        for (PlayerBullet playerBullet:playerBullets) {
+            System.out.println(playerBullet);
         }
     }
 
@@ -96,39 +100,36 @@ public class ManagerGame implements Runnable {
         ArrayList<ArrayList<Integer>> informationBullets = new ArrayList<>();
         for (PlayerBullet playerBullet : playerBullets) {
             ArrayList<Integer> informationBullet = new ArrayList<>();
-            informationBullet.add(playerBullet.coordinates.getCoordenateX());
-            informationBullet.add(playerBullet.coordinates.getCoordenateY());
-            informationBullet.add((playerBullet.isCrashed) ? 0 : 1);
+            informationBullet.add(playerBullet.getCoordinates().getCoordenateX());
+            informationBullet.add(playerBullet.getCoordinates().getCoordenateY());
+            informationBullet.add((playerBullet.getIsCrashed()) ? 0 : 1);
             informationBullets.add(informationBullet);
         }
-
         return informationBullets;
     }
 
-    public void verifyCollitions(){
-        for(PlayerBullet playerBullet : playerBullets){
-            playerBullet.isCrashed =  this.managerEnemies.verifyCollitions(playerBullet.calculateCoordinates());
+    public void verifyCollitions() {
+        for (int i = 0; i < playerBullets.length; i++) {
+            if (!playerBullets[i].isCrashed)
+                playerBullets[i].setIsCrashed(this.managerEnemies.verifyCollitions(playerBullets[i].calculateCoordinates()));
+
         }
     }
 
     private boolean verifyNotIsCrashed() {
-        for (PlayerBullet playerBullet : playerBullets) {
-            if (playerBullet.isCrashed == false)
+        for (int i = 0; i < playerBullets.length; i++) {
+            if (playerBullets[i].isCrashed == false)
                 return true;
         }
         return false;
 
     }
+
     @Override
     public void run() {
         while (this.verifyNotIsCrashed()) {
-            System.out.println(" aquí ");
-            try {
-                Thread.sleep(509);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             this.verifyCollitions();
         }
+
     }
 }

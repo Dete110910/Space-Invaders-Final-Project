@@ -9,28 +9,27 @@ public class PlayerBullet extends Bullet{
     public PlayerBullet(Coordinates coordinates) {
         super(coordinates);
     }
+
     public PlayerBullet(){
         super(new Coordinates(0,0));
         this.isCrashed = true;
     }
     @Override
     public void move() {
-        if (this.coordinates.getCoordenateY() >= -10)
-            coordinates.setCoordenateY(coordinates.getCoordenateY() - VELOCITY);
-        else
-            isCrashed = true;
+        if (this.getCoordinates().getCoordenateY() >= VELOCITY)
+            this.getCoordinates().setCoordenateY(this.getCoordinates().getCoordenateY() - VELOCITY);
+        else {
+            System.out.println("choqué con el muro");
+            this.setIsCrashed(true);
+        }
     }
 
-    @Override
-    public void verifyIsCrashes() {
-
-    }
 
     @Override
     public ArrayList<Coordinates> calculateCoordinates() {
         ArrayList<Coordinates> coordinatesList = new ArrayList<>();
-        coordinatesList.add(coordinates);
-        coordinatesList.add(new Coordinates(coordinates.getCoordenateX()  + WIDTH, coordinates.getCoordenateY() + HIGH));
+        coordinatesList.add(this.getCoordinates());
+        coordinatesList.add(new Coordinates(this.getCoordinates().getCoordenateX()  + WIDTH, this.getCoordinates().getCoordenateY() + HIGH));
         return coordinatesList;
     }
 

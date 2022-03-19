@@ -110,4 +110,5 @@ public class MainGamePanel extends JPanel {
             playerBullets[i] = new Bullet(informationBullets.get(i).get(0), informationBullets.get(i).get(1), (informationBullets.get(i).get(i) == 0) ? false : true);
         }
     }
+
 }
