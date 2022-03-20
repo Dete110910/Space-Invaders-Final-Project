@@ -9,12 +9,15 @@ public class GroupEnemies {
     private final byte SPACE_BETWEEN_INVADERS = 25;
     private final byte INIT_COORDINATE_X_ENEMY = 20;
     private final byte INIT_COORDINATE_Y_ENEMY = 50;
+    private final byte QUANTITY_OF_ENEMIES = 28;
     private byte xVelocityEnemy;
     private final byte VELOCITY_ENEMY_Y = 10;
     private int lastPosition;
     private int firstPosition;
+    private int lastRow;
     private byte direction;
     private ArrayList<ArrayList<Invader>> invadersList;
+    private byte countEnemiesDead;
 
     public GroupEnemies() {
         invadersList = new ArrayList<>();
@@ -23,6 +26,8 @@ public class GroupEnemies {
         this.initEnemies();
         this.lastPosition = invadersList.get(0).size() - 1;
         this.firstPosition = 0;
+        this.lastRow = invadersList.size()-1;
+        this.countEnemiesDead = 0;
 
     }
 
@@ -40,9 +45,11 @@ public class GroupEnemies {
     }
 
     public void move() {
-        int direction = this.defineDirection();
-        this.defineYPosition(direction);
-        this.defineXPosition();
+        if(!this.isAllDead()) {
+            int direction = this.defineDirection();
+            this.defineYPosition(direction);
+            this.defineXPosition();
+        }
     }
 
     private Coordinates verifyLast() {
@@ -81,32 +88,23 @@ public class GroupEnemies {
         return coordinatesLimit;
     }
 
-    private Coordinates verifyLast2() {
-        if (direction == 1) {
-            for (int i = invadersList.size() - 1; i >= 0; i--) { //¿menos 1?
-                for (int j = invadersList.get(i).size() - 1; j >= 0; j--) {
-                    if (!invadersList.get(i).get(j).getIsDead()) {
-                        System.out.println(i + " " + j + " derecha");
-                        return invadersList.get(i).get(j).getCoordinates();
-                    }
+    public Coordinates calculateCoordinatesLimitLower(){
+        Coordinates coordinatesLimit = null;
+        boolean isFound = false;
+        while(!isFound && lastRow>=0) {
+            for (int i = invadersList.get(lastRow).size() - 1; i >= 0&& !isFound; i--) {
+                if (!invadersList.get(lastRow).get(i).getIsDead()) {
+                    coordinatesLimit = invadersList.get(lastRow).get(i).getCoordinates();
+                    isFound = true;
+
+                    System.out.println(lastRow +" " + i);
                 }
             }
-        } else {
-            for (int i = invadersList.size() - 1; i >= 0; i--) {
-                for (int j = 0; j < invadersList.get(i).size(); j++) {
-                    if (!invadersList.get(i).get(j).getIsDead()) {
-                        System.out.println(i + " " + j + " izquierda");
-                        return invadersList.get(i).get(j).getCoordinates();
-                    }
-                }
+            if (!isFound){
+                lastRow--;
             }
         }
-        System.out.println("No debería entrar acá");
-        return new Coordinates(-5, -5);
-    }
-
-    public void win() {
-
+        return  coordinatesLimit;
     }
 
     private int defineDirection() {
@@ -148,8 +146,8 @@ public class GroupEnemies {
             for (int j = 0; j < invadersList.get(i).size(); j++) {
                 if (!invadersList.get(i).get(j).getIsDead()) {
                     if (invadersList.get(i).get(j).verifyCollition(coordinatesBullet)) {
-                        System.out.println("Entro en group Enemies");
                         invadersList.get(i).get(j).setDead(true);
+                        this.countEnemiesDead++;
                         return true;
                     }
                 }
@@ -177,5 +175,9 @@ public class GroupEnemies {
 
     public void incrementVelocity() {
         xVelocityEnemy++;
+        countEnemiesDead = 28;
+    }
+    public boolean isAllDead(){
+        return  (countEnemiesDead ==QUANTITY_OF_ENEMIES)?true:false;
     }
 }

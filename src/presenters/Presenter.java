@@ -83,20 +83,7 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
     }
 
 
-    @Override
-    public void run() {
 
-        while (true) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            this.controlSingleEnemy();
-            this.controlGroupEnemies();
-            this.controlBulletPlayer();
-        }
-    }
 
     private void controlBulletPlayer() {
         mainFrame.setInformationBullets(managerGame.getInformationPLayerBullets());
@@ -112,5 +99,25 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
     private void controlGroupEnemies() {
         mainFrame.setInformationInvaders(managerGame.getInformationInvaders());
     }
+
+    private void manageScorePlayer() {
+        mainFrame.changeToWinAndLosePanel(this,this.managerGame.isWin());
+    }
+    @Override
+    public void run() {
+        while (managerGame.isPlaying()) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            this.controlSingleEnemy();
+            this.controlGroupEnemies();
+            this.controlBulletPlayer();
+        }
+        this.manageScorePlayer();
+    }
+
+
 
 }

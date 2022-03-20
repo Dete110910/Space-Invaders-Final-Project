@@ -15,7 +15,7 @@ public class MainFrame extends JFrame {
     private TopGamePanel topGamePanel;
     private TutorialPanel tutorialPanel;
     private HighScorePanel highScoresPanel;
-
+    private FinalGamePanel finalGamePanel;
 
 
     public MainFrame(ActionListener actionListener, KeyListener keyListener){
@@ -68,7 +68,13 @@ public class MainFrame extends JFrame {
         SwingUtilities.updateComponentTreeUI(this);
         this.add(highScoresPanel);
     }
-
+    public void changeToWinAndLosePanel(ActionListener actionListener,boolean win) {
+        this.remove(mainGamePanel);
+        this.remove(topGamePanel);
+        finalGamePanel = new FinalGamePanel(actionListener,win);
+        this.add(finalGamePanel);
+        SwingUtilities.updateComponentTreeUI(this);
+    }
     private void initComponents(ActionListener actionListener, KeyListener keyListener){
         startingPanel = new StartingPanel(actionListener);
         namePanel = new NamePanel(actionListener);
@@ -77,6 +83,7 @@ public class MainFrame extends JFrame {
         topGamePanel = new TopGamePanel();
         tutorialPanel= new TutorialPanel(actionListener);
         highScoresPanel = new HighScorePanel(actionListener, new ArrayList<>()); //cuidado
+
         this.add(namePanel, BorderLayout.NORTH);
         this.add(startingPanel);
     }
@@ -107,4 +114,6 @@ public class MainFrame extends JFrame {
     public void setVisibleSingleEnemy(boolean isVisible) {
         this.mainGamePanel.setVisibleSingleEnemy(isVisible);
     }
+
+
 }

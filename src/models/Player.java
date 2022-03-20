@@ -3,6 +3,7 @@ package models;
 public class Player {
     private Coordinates coordinates;
     private final byte SPEED = 5;
+    public static final byte WIDTH = 60;
 
     public Player(Coordinates coordinates) {
         this.coordinates = coordinates;

@@ -6,15 +6,15 @@ public class ManagerGame implements Runnable {
     private boolean isPlaying;
     private ManagerEnemies managerEnemies;
     private ManagerPlayer managerPlayer;
-    private final int ZERO = 0;
     private int limitX;
     private int limitY;
     private PlayerBullet[] playerBullets;
+    private final byte SPACE_LIMIT_BORDERS = 20;
 
     public ManagerGame(int width, int height) {
         managerEnemies = new ManagerEnemies();
         managerPlayer = new ManagerPlayer(width, height);
-        limitX = width;
+        limitX = width - SPACE_LIMIT_BORDERS;
         limitY = height;
         isPlaying = false;
         playerBullets = new PlayerBullet[3];
@@ -27,13 +27,6 @@ public class ManagerGame implements Runnable {
         }
     }
 
-    public ManagerEnemies getManagerEnemies() {
-        return managerEnemies;
-    }
-
-    public ManagerPlayer getManagerPlayer() {
-        return managerPlayer;
-    }
 
     public int getXPositionPlayer() {
         return managerPlayer.getCoordinates().getCoordenateX();
@@ -52,13 +45,13 @@ public class ManagerGame implements Runnable {
     }
 
     public void moveLeftPlayer() {
-        if (getXPositionPlayer() > ZERO) {
+        if (getXPositionPlayer() > SPACE_LIMIT_BORDERS) {
             managerPlayer.moveLeft();
         }
     }
 
     public void moveRightPlayer() {
-        if (getXPositionPlayer() < limitY) {
+        if (getXPositionPlayer() < limitX - managerPlayer.getPlayer().WIDTH) {
             managerPlayer.moveRight();
         }
     }
@@ -105,20 +98,21 @@ public class ManagerGame implements Runnable {
         return informationBullets;
     }
 
-    public void verifyCollitions() {
+    public void verifyCollitionsBulletsWithEnemies() {
         for (int i = 0; i < playerBullets.length; i++) {
             if (!playerBullets[i].isCrashed)
                 if (this.managerEnemies.verifyCollitionsGroupEnemies(playerBullets[i].calculateCoordinates())) {
                     playerBullets[i].setIsCrashed(true);
                     managerEnemies.incrementVelocityEnemies();
-                }else if(this.managerEnemies.verifyCollitionSingleEnemies(playerBullets[i].calculateCoordinates())){
+
+                } else if (this.managerEnemies.verifyCollitionSingleEnemies(playerBullets[i].calculateCoordinates())) {
                     playerBullets[i].setIsCrashed(true);
                 }
 
         }
     }
 
-    private synchronized boolean verifyNotIsCrashed() {
+    private synchronized boolean verifyNotIsCrashedBullets() {
         for (int i = 0; i < playerBullets.length; i++) {
             if (playerBullets[i].isCrashed == false)
                 return true;
@@ -127,16 +121,23 @@ public class ManagerGame implements Runnable {
 
     }
 
-    @Override
-    public void run() {
-        while (this.verifyNotIsCrashed()) {
-            this.verifyCollitions();
-
-        }
-
-    }
-
     public boolean getIsDeadSingleEnemy() {
         return this.managerEnemies.getIsDeadSingleEnemy();
     }
+
+    public boolean isWin(){
+        return  managerEnemies.isAllEnemiesDead();
+    }
+
+
+    @Override
+    public void run() {
+        while (!this.managerEnemies.isAllEnemiesDead() && this.verifyNotIsCrashedBullets() && !managerEnemies.getIsCrashedWithPlayer()) {
+            this.verifyCollitionsBulletsWithEnemies();
+        }
+        if (this.managerEnemies.isAllEnemiesDead()) {
+            this.isPlaying = false;
+        }
+    }
+
 }

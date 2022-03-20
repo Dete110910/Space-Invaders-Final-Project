@@ -19,4 +19,9 @@ public class SettingsComponents {
         label.setBackground(Color.BLACK);
         label.setBorder(null);
     }
+    public static void setCharacteristicsJTextField(JTextField textField, int size){
+        textField.setFont(ChangeFont.changeFont(size));
+        textField.setForeground(Color.WHITE);
+        textField.setBackground(Color.BLACK);
+    }
 }
