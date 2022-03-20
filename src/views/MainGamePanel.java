@@ -107,8 +107,11 @@ public class MainGamePanel extends JPanel {
 
     public void setInformationBullets(ArrayList<ArrayList<Integer>> informationBullets) {
         for (int i = 0; i < informationBullets.size(); i++) {
-            playerBullets[i] = new Bullet(informationBullets.get(i).get(0), informationBullets.get(i).get(1), (informationBullets.get(i).get(i) == 0) ? false : true);
+            playerBullets[i] = new Bullet(informationBullets.get(i).get(0), informationBullets.get(i).get(1), (informationBullets.get(i).get(2) == 0) ? false : true);
         }
     }
 
+    public void setVisibleSingleEnemy(boolean isVisible) {
+        singleEnemy.setIsVisible(isVisible);
+    }
 }

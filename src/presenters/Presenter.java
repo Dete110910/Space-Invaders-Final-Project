@@ -63,14 +63,11 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
                 managerGame.moveRightPlayer();
                 mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
             } else if (e.getKeyChar() == ' ') {
-
                 managerGame.createPlayerBullets();
                 if (Thread.State.NEW == threadManagerGame.getState()){
                      threadManagerGame.start();
-                    System.out.println("me comencé");
                 }else if ( Thread.State.TERMINATED == threadManagerGame.getState()){
                     threadManagerGame = new Thread(managerGame);
-                    System.out.println("soy nuevo en el presenter ");
                 }
             }
 
@@ -109,6 +106,7 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
     private void controlSingleEnemy() {
         mainFrame.setXPositionSingleEnemy(managerGame.getXPositionSingleEnemy());
         mainFrame.setYPositionSingleEnemy(managerGame.getYPositionSingleEnemy());
+        mainFrame.setVisibleSingleEnemy(!managerGame.getIsDeadSingleEnemy());
     }
 
     private void controlGroupEnemies() {

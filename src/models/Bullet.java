@@ -26,14 +26,14 @@ public abstract class Bullet implements Runnable {
             }
             this.move();
         }
-        System.out.println("se termino el hilo en bala :v ");
+
     }
 
-    public synchronized Coordinates getCoordinates() {
+    public  Coordinates getCoordinates() {
         return coordinates;
     }
 
-    public synchronized void setCoordinates(Coordinates coordinates){
+    public  void setCoordinates(Coordinates coordinates){
         this.coordinates = coordinates;
     }
     public  boolean getIsCrashed() {

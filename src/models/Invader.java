@@ -6,12 +6,10 @@ public class Invader extends Enemy {
 
     public static final byte WIDTH = 40;
     public static final byte HEIGHT = 32;
-    private boolean isDead;
     private TypeEnemy type;
 
     public Invader(Coordinates coordinates, TypeEnemy type) {
         super(coordinates);
-        this.isDead = false;
         this.type = type;
     }
 

@@ -9,15 +9,20 @@ public class GroupEnemies {
     private final byte SPACE_BETWEEN_INVADERS = 25;
     private final byte INIT_COORDINATE_X_ENEMY = 20;
     private final byte INIT_COORDINATE_Y_ENEMY = 50;
-    private final byte VELOCITY_ENEMY = 5;
-    private final byte VELOCITY_ENEMY_Y = 5;
+    private byte xVelocityEnemy;
+    private final byte VELOCITY_ENEMY_Y = 10;
+    private int lastPosition;
+    private int firstPosition;
     private byte direction;
     private ArrayList<ArrayList<Invader>> invadersList;
 
     public GroupEnemies() {
         invadersList = new ArrayList<>();
+        this.xVelocityEnemy = 5;
         this.direction = 1;
         this.initEnemies();
+        this.lastPosition = invadersList.get(0).size() - 1;
+        this.firstPosition = 0;
 
     }
 
@@ -38,27 +43,65 @@ public class GroupEnemies {
         int direction = this.defineDirection();
         this.defineYPosition(direction);
         this.defineXPosition();
-
     }
 
     private Coordinates verifyLast() {
+        return (direction == 1) ? calculateCoordinatesLimitRight() : calculateCoordinatesLimitLeft();
+    }
+
+    private Coordinates calculateCoordinatesLimitRight() {
+        Coordinates coordinatesLimit = null;
+        boolean isFound = false;
+        while (lastPosition >= 0 && !isFound) {
+            for (int i = invadersList.size() - 1; i >= 0 && !isFound; i--) {
+                if (!invadersList.get(i).get(this.lastPosition).getIsDead()) {
+                    coordinatesLimit = invadersList.get(i).get(this.lastPosition).getCoordinates();
+                    isFound = true;
+                }
+            }
+            if (!isFound)
+                lastPosition--;
+        }
+        return coordinatesLimit;
+    }
+
+    private Coordinates calculateCoordinatesLimitLeft() {
+        Coordinates coordinatesLimit = null;
+        boolean isFound = false;
+        while (firstPosition < 7 && !isFound) {
+            for (int i = invadersList.size() - 1; i >= 0 && !isFound; i--) {
+                if (!invadersList.get(i).get(this.firstPosition).getIsDead()) {
+                    coordinatesLimit = invadersList.get(i).get(this.firstPosition).getCoordinates();
+                    isFound = true;
+                }
+            }
+            if (!isFound)
+                firstPosition++;
+        }
+        return coordinatesLimit;
+    }
+
+    private Coordinates verifyLast2() {
         if (direction == 1) {
             for (int i = invadersList.size() - 1; i >= 0; i--) { //¿menos 1?
-                for (int j = invadersList.get(i).size()-1; j >=0; j--) {
+                for (int j = invadersList.get(i).size() - 1; j >= 0; j--) {
                     if (!invadersList.get(i).get(j).getIsDead()) {
+                        System.out.println(i + " " + j + " derecha");
                         return invadersList.get(i).get(j).getCoordinates();
                     }
                 }
             }
         } else {
-            for (ArrayList<Invader> invaders : invadersList) {
-                for (Invader invader : invaders) {
-                    if (!invader.getIsDead()) {
-                        return invader.getCoordinates();
+            for (int i = invadersList.size() - 1; i >= 0; i--) {
+                for (int j = 0; j < invadersList.get(i).size(); j++) {
+                    if (!invadersList.get(i).get(j).getIsDead()) {
+                        System.out.println(i + " " + j + " izquierda");
+                        return invadersList.get(i).get(j).getCoordinates();
                     }
                 }
             }
         }
+        System.out.println("No debería entrar acá");
         return new Coordinates(-5, -5);
     }
 
@@ -70,14 +113,14 @@ public class GroupEnemies {
         Coordinates coordinates = this.verifyLast();
         if (coordinates.getCoordenateX() <= INIT_COORDINATE_X_ENEMY) {
             return 1;
-        } else if (coordinates.getCoordenateX() >= 235) {
+        } else if (coordinates.getCoordenateX() >= 600) {
             return 0;
         }
         return direction;
     }
 
     private void defineXPosition() {
-        int aux = VELOCITY_ENEMY;
+        int aux = xVelocityEnemy;
         if (direction == 0) {
             aux *= -1;
         }
@@ -132,4 +175,7 @@ public class GroupEnemies {
         return informationList;
     }
 
+    public void incrementVelocity() {
+        xVelocityEnemy++;
+    }
 }

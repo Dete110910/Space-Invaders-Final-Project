@@ -28,7 +28,7 @@ public class ManagerEnemies implements Runnable {
         return groupEnemies.getInformationInvaders();
     }
 
-    public boolean verifyCollitions(ArrayList<Coordinates> coordinatesBullet){
+    public boolean verifyCollitionsGroupEnemies(ArrayList<Coordinates> coordinatesBullet){
         return this.groupEnemies.verifyIsCrashed(coordinatesBullet);
     }
 
@@ -46,4 +46,15 @@ public class ManagerEnemies implements Runnable {
         }
     }
 
+    public void incrementVelocityEnemies() {
+        groupEnemies.incrementVelocity();
+    }
+
+    public boolean verifyCollitionSingleEnemies(ArrayList<Coordinates> calculateCoordinates) {
+        return  this.singleEnemy.verifyCollition(calculateCoordinates);
+    }
+
+    public boolean getIsDeadSingleEnemy() {
+       return  this.singleEnemy.getIsDead();
+    }
 }

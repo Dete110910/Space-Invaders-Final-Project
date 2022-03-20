@@ -83,16 +83,13 @@ public class ManagerGame implements Runnable {
     public void createPlayerBullets() {
         boolean isNotShot = true;
         for (int i = 0; i < playerBullets.length && isNotShot; i++) {
-            if (playerBullets[i].getIsCrashed()) {
+            if (playerBullets[i] == null || playerBullets[i].getIsCrashed()) {
                 playerBullets[i] = new PlayerBullet(new Coordinates(managerPlayer.getCoordinates().getCoordenateX() + 28, managerPlayer.getCoordinates().getCoordenateY()));
                 playerBullets[i].setIsCrashed(false);
                 Thread bulletThread = new Thread(playerBullets[i]);
                 bulletThread.start();
                 isNotShot = false;
             }
-        }
-        for (PlayerBullet playerBullet:playerBullets) {
-            System.out.println(playerBullet);
         }
     }
 
@@ -111,12 +108,17 @@ public class ManagerGame implements Runnable {
     public void verifyCollitions() {
         for (int i = 0; i < playerBullets.length; i++) {
             if (!playerBullets[i].isCrashed)
-                playerBullets[i].setIsCrashed(this.managerEnemies.verifyCollitions(playerBullets[i].calculateCoordinates()));
+                if (this.managerEnemies.verifyCollitionsGroupEnemies(playerBullets[i].calculateCoordinates())) {
+                    playerBullets[i].setIsCrashed(true);
+                    managerEnemies.incrementVelocityEnemies();
+                }else if(this.managerEnemies.verifyCollitionSingleEnemies(playerBullets[i].calculateCoordinates())){
+                    playerBullets[i].setIsCrashed(true);
+                }
 
         }
     }
 
-    private boolean verifyNotIsCrashed() {
+    private synchronized boolean verifyNotIsCrashed() {
         for (int i = 0; i < playerBullets.length; i++) {
             if (playerBullets[i].isCrashed == false)
                 return true;
@@ -129,7 +131,12 @@ public class ManagerGame implements Runnable {
     public void run() {
         while (this.verifyNotIsCrashed()) {
             this.verifyCollitions();
+
         }
 
+    }
+
+    public boolean getIsDeadSingleEnemy() {
+        return this.managerEnemies.getIsDeadSingleEnemy();
     }
 }

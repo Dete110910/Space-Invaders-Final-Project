@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class SingleEnemy extends Enemy implements  Runnable {
 
-    private static final byte VELOCITY = 0; // 7
+    private static final byte VELOCITY = 15;
     private static final byte WIDTH = 40;
     private static final byte HEIGHT = 20;
 
@@ -43,8 +43,10 @@ public class SingleEnemy extends Enemy implements  Runnable {
         if(this.coordinates.getCoordenateX() <= coordinates.get(0).getCoordenateX()
                 && this.coordinates.getCoordenateX() + WIDTH >= coordinates.get(1).getCoordenateX()
                 && this.coordinates.getCoordenateY() <= coordinates.get(0).getCoordenateY()
-                && this.coordinates.getCoordenateY()+ HEIGHT >= coordinates.get(1).getCoordenateY())
+                && this.coordinates.getCoordenateY()+ HEIGHT >= coordinates.get(1).getCoordenateY()) {
+            this.isDead = true;
             return true;
+        }
         return false;
     }
 
@@ -59,7 +61,7 @@ public class SingleEnemy extends Enemy implements  Runnable {
 
     @Override
     public void run() {
-        while (true) {
+        while (!isDead) {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
@@ -67,5 +69,9 @@ public class SingleEnemy extends Enemy implements  Runnable {
             }
             this.move();
         }
+    }
+
+    public boolean getIsDead() {
+        return  this.isDead;
     }
 }

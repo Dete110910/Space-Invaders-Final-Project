@@ -103,4 +103,8 @@ public class MainFrame extends JFrame {
     public void setInformationBullets(ArrayList<ArrayList<Integer>> informationBullets) {
         mainGamePanel.setInformationBullets(informationBullets);
     }
+
+    public void setVisibleSingleEnemy(boolean isVisible) {
+        this.mainGamePanel.setVisibleSingleEnemy(isVisible);
+    }
 }
