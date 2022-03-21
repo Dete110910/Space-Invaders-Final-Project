@@ -15,11 +15,10 @@ public class PlayerBullet extends Bullet{
         this.isCrashed = true;
     }
     @Override
-    public void move() {
+    public synchronized void move() {
         if (this.getCoordinates().getCoordenateY() >= VELOCITY)
             this.getCoordinates().setCoordenateY(this.getCoordinates().getCoordenateY() - VELOCITY);
         else {
-            System.out.println("choqué con el muro");
             this.setIsCrashed(true);
         }
     }

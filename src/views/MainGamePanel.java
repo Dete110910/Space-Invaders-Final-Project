@@ -92,11 +92,11 @@ public class MainGamePanel extends JPanel {
     public String defineTypeInvader(int type) {
         switch (type) {
             case 0:
-                return SOURCE_BASIC_ENEMY;
+                return SOURCE_DIFFICULT_ENEMY;
             case 1:
                 return SOURCE_NORMAL_ENEMY;
             case 2:
-                return SOURCE_DIFFICULT_ENEMY;
+                return SOURCE_BASIC_ENEMY ;
 
             default:
                 return SOURCE_NORMAL_ENEMY;
@@ -107,8 +107,11 @@ public class MainGamePanel extends JPanel {
 
     public void setInformationBullets(ArrayList<ArrayList<Integer>> informationBullets) {
         for (int i = 0; i < informationBullets.size(); i++) {
-            playerBullets[i] = new Bullet(informationBullets.get(i).get(0), informationBullets.get(i).get(1), (informationBullets.get(i).get(i) == 0) ? false : true);
+            playerBullets[i] = new Bullet(informationBullets.get(i).get(0), informationBullets.get(i).get(1), (informationBullets.get(i).get(2) == 0) ? false : true);
         }
     }
 
+    public void setVisibleSingleEnemy(boolean isVisible) {
+        singleEnemy.setIsVisible(isVisible);
+    }
 }

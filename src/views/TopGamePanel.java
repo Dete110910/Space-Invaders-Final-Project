@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class TopGamePanel extends JPanel {
 
-    private JLabel score, scorePoints, lives, livesIcon;
+    private JLabel score, scorePoints;
 
     public TopGamePanel(){
         this.setVisible(true);
@@ -16,23 +16,16 @@ public class TopGamePanel extends JPanel {
 
     private void initComponents(){
         score = new JLabel("Score: ");
-        score.setForeground(Color.white);
+        SettingsComponents.setCharacteristicsLabel(score,50);
         scorePoints = new JLabel("0");
-        scorePoints.setForeground(Color.white);
-        lives = new JLabel("Lives: ");
-        lives.setForeground(Color.white);
-        livesIcon = new JLabel();
-        livesIcon.setIcon(new ImageIcon("src/rsc/player.png"));
-
-        GridBagConstraints gbc = new GridBagConstraints();
+        SettingsComponents.setCharacteristicsLabel(scorePoints,50);
         this.add(score);
         this.add(scorePoints);
-        gbc.insets = new Insets(0,500,0,0);
-        this.add(lives, gbc);
-        this.add(livesIcon);
-
 
     }
 
 
+    public void updateScorePlayer(int scorePlayer) {
+        this.scorePoints.setText(String.valueOf(scorePlayer));
+    }
 }

@@ -15,15 +15,15 @@ public class MainFrame extends JFrame {
     private TopGamePanel topGamePanel;
     private TutorialPanel tutorialPanel;
     private HighScorePanel highScoresPanel;
+    private FinalGamePanel finalGamePanel;
 
 
-
-    public MainFrame(ActionListener actionListener, KeyListener keyListener){
+    public MainFrame(ActionListener actionListener, KeyListener keyListener,ArrayList<String> informationScores){
         super("Space Invaders");
         this.setResizable(false);
         this.setFocusable(true);
         this.setSize(700,700);
-        this.initComponents(actionListener, keyListener);
+        this.initComponents(actionListener,informationScores);
         this.addKeyListener(keyListener);
         this.setVisible(true);
         this.setLocationRelativeTo(null);
@@ -34,6 +34,14 @@ public class MainFrame extends JFrame {
         this.remove(chooseGameMode);
         this.remove(tutorialPanel);
         this.remove(highScoresPanel);
+        SwingUtilities.updateComponentTreeUI(this);
+        this.namePanel.makeVisibleBackButton(false);
+        this.namePanel.makeInvisibleTutorialButton(true);
+        this.add(namePanel, BorderLayout.NORTH);
+        this.add(startingPanel);
+    }
+    public void changeToMainPanelFromFinalGamePanel(){
+        this.remove(finalGamePanel);
         SwingUtilities.updateComponentTreeUI(this);
         this.namePanel.makeVisibleBackButton(false);
         this.namePanel.makeInvisibleTutorialButton(true);
@@ -68,15 +76,22 @@ public class MainFrame extends JFrame {
         SwingUtilities.updateComponentTreeUI(this);
         this.add(highScoresPanel);
     }
-
-    private void initComponents(ActionListener actionListener, KeyListener keyListener){
+    public void changeToWinAndLosePanel(ActionListener actionListener,boolean win) {
+        this.remove(mainGamePanel);
+        this.remove(topGamePanel);
+        finalGamePanel = new FinalGamePanel(actionListener,win);
+        this.add(finalGamePanel);
+        SwingUtilities.updateComponentTreeUI(this);
+    }
+    private void initComponents(ActionListener actionListener, ArrayList<String> informationScores){
         startingPanel = new StartingPanel(actionListener);
         namePanel = new NamePanel(actionListener);
         chooseGameMode = new ChooseGameMode(actionListener);
         mainGamePanel = new MainGamePanel(this.getWidth(), this.getHeight());
         topGamePanel = new TopGamePanel();
         tutorialPanel= new TutorialPanel(actionListener);
-        highScoresPanel = new HighScorePanel(actionListener, new ArrayList<>()); //cuidado
+        highScoresPanel = new HighScorePanel(actionListener, informationScores);
+
         this.add(namePanel, BorderLayout.NORTH);
         this.add(startingPanel);
     }
@@ -102,5 +117,25 @@ public class MainFrame extends JFrame {
 
     public void setInformationBullets(ArrayList<ArrayList<Integer>> informationBullets) {
         mainGamePanel.setInformationBullets(informationBullets);
+    }
+
+    public void setVisibleSingleEnemy(boolean isVisible) {
+        this.mainGamePanel.setVisibleSingleEnemy(isVisible);
+    }
+
+
+    public void updateScorePlayer(int scorePlayer) {
+        this.topGamePanel.updateScorePlayer(scorePlayer);
+    }
+
+    public void setFinalScore(String finalScore) {
+        this.finalGamePanel.setScore(finalScore);
+    }
+
+    public String getNamePlayer() {
+      return  finalGamePanel.getNamePlayer();
+    }
+    public void updateLabels(ArrayList<String> informationHighScores){
+        this.highScoresPanel.updateLabels(informationHighScores);
     }
 }

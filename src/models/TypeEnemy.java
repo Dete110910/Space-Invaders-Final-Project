@@ -1,7 +1,7 @@
 package models;
 
 public enum TypeEnemy {
-    ENEMY_BASIC(50,2), ENEMY_NORMAL(70,1), ENEMY_DIFFICULT(100,0);
+    ENEMY_DIFFICULT(100,0), ENEMY_NORMAL(70,1),ENEMY_BASIC(50,2),  SINGLE_ENEMY(150,3);
     private int value;
     private int type;
 
