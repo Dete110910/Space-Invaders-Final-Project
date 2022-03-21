@@ -62,6 +62,12 @@ public class NamePanel extends JPanel {
         this.add(this.name, gbc);
     }
 
+    @Override
+    public void paint(Graphics g){
+        SettingsComponents.setBackground(this, g);
+        super.paint(g);
+    }
+
     public void makeVisibleBackButton(boolean isVisible) {
         SettingsComponents.setCharacteristicsButton(this.backButton, 60);
         this.backButton.setVisible(isVisible);

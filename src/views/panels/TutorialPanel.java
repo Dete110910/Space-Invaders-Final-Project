@@ -85,5 +85,10 @@ public class TutorialPanel extends JPanel {
         SettingsComponents.setCharacteristicsLabel(instructionsTwoPlayersPartThree, 80);
         this.iconPlayer.setIcon(new ImageIcon("src/rsc/player.png"));
     }
+    @Override
+    public void paint(Graphics g){
+        SettingsComponents.setBackground(this, g);
+        super.paint(g);
+    }
 
 }

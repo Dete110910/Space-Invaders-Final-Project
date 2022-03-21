@@ -5,6 +5,7 @@ import views.objects.Bullet;
 import views.objects.Invader;
 import views.objects.Player;
 import views.objects.SingleEnemy;
+import views.utilities.SettingsComponents;
 
 import javax.swing.*;
 import java.awt.*;
@@ -45,6 +46,12 @@ public class MainGamePanel extends JPanel {
         this.printGroupEnemies(g);
         this.printBullets(g);
         repaint();
+    }
+
+    @Override
+    public void paint(Graphics g){
+        SettingsComponents.setBackground(this, g);
+        super.paint(g);
     }
 
     private void printBullets(Graphics g) {

@@ -73,6 +73,12 @@ public class FinalGamePanel extends JPanel {
         this.add(this.doneButton, gbc);
     }
 
+    @Override
+    public void paint(Graphics g){
+        SettingsComponents.setBackground(this, g);
+        super.paint(g);
+    }
+
     public void setScore(String score) {
         this.score.setText(score);
     }
