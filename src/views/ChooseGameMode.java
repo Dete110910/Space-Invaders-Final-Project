@@ -20,21 +20,21 @@ public class ChooseGameMode extends JPanel {
         twoPlayers = new JButton("Two Players");
         twoPlayersLAN = new JButton("Two Players LAN");
 
-        onePlayer.setPreferredSize(new Dimension(120,60));
+        //onePlayer.setPreferredSize(new Dimension(120,60));
         onePlayer.addActionListener(actionListener);
         onePlayer.setActionCommand("PlayOnePlayer");
 
-        twoPlayers.setPreferredSize(new Dimension(150,70));
+        //twoPlayers.setPreferredSize(new Dimension(150,70));
         twoPlayers.addActionListener(actionListener);
         twoPlayers.setActionCommand("PlayTwoPlayers");
 
-        twoPlayersLAN.setPreferredSize(new Dimension(200,80));
+        //twoPlayersLAN.setPreferredSize(new Dimension(200,80));
         twoPlayersLAN.addActionListener(actionListener);
         twoPlayersLAN.setActionCommand("PlayTwoPlayersLAN");
 
-        SettingsComponents.setCharacteristicsButton(onePlayer);
-        SettingsComponents.setCharacteristicsButton(twoPlayers);
-        SettingsComponents.setCharacteristicsButton(twoPlayersLAN);
+        SettingsComponents.setCharacteristicsButton(onePlayer, 90);
+        SettingsComponents.setCharacteristicsButton(twoPlayers, 90);
+        SettingsComponents.setCharacteristicsButton(twoPlayersLAN, 90);
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(0,20,0,20);

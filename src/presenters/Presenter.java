@@ -26,14 +26,14 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
                 mainFrame.changeToSelectPlayersPanel();
                 break;
             case "HighScore":
-
+                System.out.println("To implement");
                 break;
             case "Back":
                 mainFrame.changeToMainPanel();
                 break;
             case "PlayOnePlayer":
                 mainFrame.changeToOnePlayerPanel();
-
+                initComponents();
                 break;
             case "PlayTwoPlayers":
                 System.out.println("To implement");
@@ -82,7 +82,7 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
             }catch (InterruptedException e){
                 e.printStackTrace();
             }
-           mainFrame.setPosition(managerGame.getManagerEnemies().getShipSingle().move());
+            mainFrame.setPosition(managerGame.getManagerEnemies().getShipSingle().move());
             System.out.println(managerGame.getManagerEnemies().getShipSingle().move());
 
 

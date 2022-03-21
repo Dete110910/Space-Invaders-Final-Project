@@ -1,11 +1,11 @@
 package models;
 
-public class SingleShip extends Enemy{
+public class SingleEnemy extends Enemy{
     private int xPosition;
     private int yPosition;
     private int  direction;
 
-    public SingleShip(Coordinates coordinates) {
+    public SingleEnemy(Coordinates coordinates) {
         super(coordinates);
         this.xPosition=coordinates.getCoordenateX();
         this.yPosition=coordinates.getCoordenateY();

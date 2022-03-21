@@ -23,7 +23,7 @@ public class MainGamePanel extends JPanel {
         super.paintComponent(g);
         player.paintShipPlayer(g, this);
         singleShip.paintSingleShip(g, this);
-repaint();
+        repaint();
     }
 
 

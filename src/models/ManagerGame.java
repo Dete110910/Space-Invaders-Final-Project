@@ -8,7 +8,7 @@ public class ManagerGame {
     private int limitY;
 
     public ManagerGame(int width, int height) {
-        managerEnemies= new ManagerEnemies();
+        managerEnemies= new ManagerEnemies( width, height);
         managerPlayer= new ManagerPlayer(width,height);
         limitX = width;
         limitY = height;

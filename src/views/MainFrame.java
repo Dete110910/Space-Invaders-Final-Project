@@ -18,23 +18,25 @@ public class MainFrame extends JFrame {
 
     public MainFrame(ActionListener actionListener, KeyListener keyListener){
         super("Space Invaders");
-       // this.setResizable(false);
+        this.setResizable(false);
         this.setFocusable(true);
         this.setSize(700,700);
         this.initComponents(actionListener, keyListener);
         this.addKeyListener(keyListener);
         this.setVisible(true);
+        this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
     }
-
     public void changeToMainPanel(){
         this.remove(chooseGameMode);
+        this.remove(tutorialPanel);
         SwingUtilities.updateComponentTreeUI(this);
         this.namePanel.makeVisibleBackButton(false);
+        this.namePanel.makeInvisibleTutorialButton(true);
+        this.add(namePanel, BorderLayout.NORTH);
         this.add(startingPanel);
     }
-
     public void changeToTutorialPanel(){
         this.remove(startingPanel);
         this.remove(namePanel);
@@ -46,8 +48,8 @@ public class MainFrame extends JFrame {
         this.remove(startingPanel);
         SwingUtilities.updateComponentTreeUI(this);
         this.namePanel.makeVisibleBackButton(true);
+        this.namePanel.makeInvisibleTutorialButton(false);
         this.add(chooseGameMode);
-
     }
 
     public void changeToOnePlayerPanel(){
