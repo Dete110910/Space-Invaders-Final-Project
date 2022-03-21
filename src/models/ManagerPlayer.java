@@ -21,4 +21,12 @@ public class ManagerPlayer {
     public void moveRight(){
         player.moveRight();
     }
+
+    public void addScore(int score) {
+        player.addScore(score);
+    }
+
+    public int getScore() {
+        return player.getScore();
+    }
 }

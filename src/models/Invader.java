@@ -6,7 +6,6 @@ public class Invader extends Enemy {
 
     public static final byte WIDTH = 40;
     public static final byte HEIGHT = 32;
-    private TypeEnemy type;
 
     public Invader(Coordinates coordinates, TypeEnemy type) {
         super(coordinates);
@@ -19,14 +18,6 @@ public class Invader extends Enemy {
 
     public void setDead(boolean dead) {
         isDead = dead;
-    }
-
-    public TypeEnemy getType() {
-        return type;
-    }
-
-    public void setType(TypeEnemy type) {
-        this.type = type;
     }
 
     public Coordinates getCoordinates() {

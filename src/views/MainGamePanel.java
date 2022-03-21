@@ -92,11 +92,11 @@ public class MainGamePanel extends JPanel {
     public String defineTypeInvader(int type) {
         switch (type) {
             case 0:
-                return SOURCE_BASIC_ENEMY;
+                return SOURCE_DIFFICULT_ENEMY;
             case 1:
                 return SOURCE_NORMAL_ENEMY;
             case 2:
-                return SOURCE_DIFFICULT_ENEMY;
+                return SOURCE_BASIC_ENEMY ;
 
             default:
                 return SOURCE_NORMAL_ENEMY;

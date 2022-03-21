@@ -15,7 +15,6 @@ public class ManagerEnemies implements Runnable {
         this.singleEnemy = new SingleEnemy(new Coordinates(INIT_COORDINATE_X_SINGLE_ENEMY, INIT_COORDINATE_Y_SINGLE_ENEMY));
         this.groupEnemies = new GroupEnemies();
         this.isCrashedWithPlayer = false;
-        singleEnemy.isDead = true;
     }
 
     public SingleEnemy getSingleEnemy() {
@@ -31,7 +30,7 @@ public class ManagerEnemies implements Runnable {
         return groupEnemies.getInformationInvaders();
     }
 
-    public boolean verifyCollitionsGroupEnemies(ArrayList<Coordinates> coordinatesBullet){
+    public int verifyCollitionsGroupEnemies(ArrayList<Coordinates> coordinatesBullet){
         return this.groupEnemies.verifyIsCrashed(coordinatesBullet);
     }
     public void incrementVelocityEnemies() {
@@ -45,6 +44,7 @@ public class ManagerEnemies implements Runnable {
     public boolean getIsDeadSingleEnemy() {
         return  this.singleEnemy.getIsDead();
     }
+
     public boolean verifyCollitionWithPlayer(){
         Coordinates lastCoordinate = this.groupEnemies.calculateCoordinatesLimitLower();
         if(lastCoordinate.getCoordenateY() >=580) {
@@ -64,7 +64,8 @@ public class ManagerEnemies implements Runnable {
     public void run() {
         Thread singleInvaderThread = new Thread(this.singleEnemy);
         singleInvaderThread.start();
-        while (!groupEnemies.isAllDead() && !verifyCollitionWithPlayer()) {
+        while (!groupEnemies.isAllDead() && !getIsCrashedWithPlayer()) {
+            verifyCollitionWithPlayer();
             try {
                 Thread.sleep(250);
             } catch (InterruptedException e) {

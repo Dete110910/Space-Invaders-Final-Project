@@ -40,16 +40,14 @@ public class FinalGamePanel extends JPanel {
         SettingsComponents.setCharacteristicsLabel(nameTxt,70);
         this.add(nameTxt,gbc);
 
-        gbc.gridwidth = GridBagConstraints.REMAINDER;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.insets = new Insets(0,0,5, 100);
-        namePlayer = new JTextField();
-        SettingsComponents.setCharacteristicsJTextField(namePlayer,70);
-        this.add(namePlayer,gbc);
+           gbc.gridwidth = GridBagConstraints.REMAINDER;
+           gbc.fill = GridBagConstraints.HORIZONTAL;
+           namePlayer = new JTextField(4);
+           SettingsComponents.setCharacteristicsJTextField(namePlayer,70);
+           this.add(namePlayer,gbc);
 
         gbc.gridx = 1;
-        gbc.insets = new Insets(-25,0,50, 0);
-        //gbc.gridy= 3;
+        gbc.insets = new Insets(0,0,0, 0);
         warning = new JLabel("*FOUR LETTER LIMIT");
         SettingsComponents.setCharacteristicsLabel(warning,35);
         warning.setForeground(Color.RED);
@@ -59,11 +57,17 @@ public class FinalGamePanel extends JPanel {
         gbc.fill = GridBagConstraints.NONE;
         gbc.insets = new Insets(0,0,50, 0);
         doneButton = new JButton("DONE");
+        doneButton.addActionListener(actionListener);
+        doneButton.setActionCommand("Done");
         SettingsComponents.setCharacteristicsButton(doneButton,70);
         this.add(doneButton,gbc);
 
     }
     public void setScore(String score){
         this.score.setText(score);
+    }
+
+    public String getNamePlayer() {
+        return  this.namePlayer.getText();
     }
 }

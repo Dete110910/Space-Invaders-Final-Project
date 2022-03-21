@@ -36,7 +36,7 @@ public class GroupEnemies {
         for (int i = 0, auxYPosition = INIT_COORDINATE_Y_ENEMY; i < SIZE_ROW_ENEMIES; i++, auxYPosition += Invader.HEIGHT + SPACE_BETWEEN_INVADERS) {
             ArrayList<Invader> auxInvaderList = new ArrayList<>();
             for (int j = 0, auxXPosition = INIT_COORDINATE_X_ENEMY; j < SIZE_COLUM_ENEMIES; j++, auxXPosition += Invader.WIDTH + SPACE_BETWEEN_INVADERS) {
-                Invader invader = new Invader(new Coordinates(auxXPosition, auxYPosition), enemies[(i < enemies.length) ? i : i - 1]);
+                Invader invader = new Invader(new Coordinates(auxXPosition, auxYPosition), enemies[(i < enemies.length-1) ? i : i - 1]);
                 auxInvaderList.add(invader);
             }
             invadersList.add(auxInvaderList);
@@ -96,8 +96,6 @@ public class GroupEnemies {
                 if (!invadersList.get(lastRow).get(i).getIsDead()) {
                     coordinatesLimit = invadersList.get(lastRow).get(i).getCoordinates();
                     isFound = true;
-
-                    System.out.println(lastRow +" " + i);
                 }
             }
             if (!isFound){
@@ -141,19 +139,19 @@ public class GroupEnemies {
 
     }
 
-    public boolean verifyIsCrashed(ArrayList<Coordinates> coordinatesBullet) {
+    public int verifyIsCrashed(ArrayList<Coordinates> coordinatesBullet) {
         for (int i = 0; i < invadersList.size(); i++) {
             for (int j = 0; j < invadersList.get(i).size(); j++) {
                 if (!invadersList.get(i).get(j).getIsDead()) {
                     if (invadersList.get(i).get(j).verifyCollition(coordinatesBullet)) {
                         invadersList.get(i).get(j).setDead(true);
                         this.countEnemiesDead++;
-                        return true;
+                        return invadersList.get(i).get(j).getType().getValue();
                     }
                 }
             }
         }
-        return false;
+        return 0;
     }
 
     public ArrayList<ArrayList<ArrayList<Integer>>> getInformationInvaders() {
@@ -175,7 +173,6 @@ public class GroupEnemies {
 
     public void incrementVelocity() {
         xVelocityEnemy++;
-        countEnemiesDead = 28;
     }
     public boolean isAllDead(){
         return  (countEnemiesDead ==QUANTITY_OF_ENEMIES)?true:false;

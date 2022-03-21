@@ -15,11 +15,8 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
     private Thread threadManagerGame;
 
     public Presenter() {
-        mainFrame = new MainFrame(this, this);
-        managerGame = new ManagerGame(mainFrame.getWidth(), mainFrame.getHeight());
-        mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
-        mainFrame.setYPositionPlayer(managerGame.getYPositionPlayer());
-        this.threadManagerGame = new Thread(managerGame);
+        managerGame = new ManagerGame();
+        mainFrame = new MainFrame(this, this,this.managerGame.getInformationHighScores());
     }
 
     @Override
@@ -27,9 +24,14 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
         switch (actionEvent.getActionCommand()) {
             case "Play":
                 mainFrame.changeToSelectPlayersPanel();
+                managerGame = new ManagerGame(mainFrame.getWidth(), mainFrame.getHeight());
+                mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
+                mainFrame.setYPositionPlayer(managerGame.getYPositionPlayer());
+                this.threadManagerGame = new Thread(managerGame);
                 break;
             case "HighScore":
                 mainFrame.changeToHighScoresPanel();
+                mainFrame.updateLabels(managerGame.getInformationHighScores());
                 break;
             case "Back":
                 mainFrame.changeToMainPanel();
@@ -47,6 +49,10 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
             case "PlayTwoPlayersLAN":
                 System.out.println("To implement");
                 break;
+            case "Done":
+                managerGame.setNamePlayer(mainFrame.getNamePlayer());
+                mainFrame.changeToMainPanelFromFinalGamePanel();
+                break;
             case "Tutorial":
                 mainFrame.changeToTutorialPanel();
                 break;
@@ -56,10 +62,10 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
     @Override
     public void keyPressed(KeyEvent e) {
         if (managerGame.isPlaying())
-            if (e.getKeyChar() == 'a') {
+            if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A') {
                 managerGame.moveLeftPlayer();
                 mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
-            } else if (e.getKeyChar() == 'd') {
+            } else if (e.getKeyChar() == 'd' || e.getKeyChar() == 'D') {
                 managerGame.moveRightPlayer();
                 mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
             } else if (e.getKeyChar() == ' ') {
@@ -102,7 +108,12 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
 
     private void manageScorePlayer() {
         mainFrame.changeToWinAndLosePanel(this,this.managerGame.isWin());
+        mainFrame.setFinalScore(String.valueOf(managerGame.getScorePlayer()));
     }
+    private void controlScorePlayer() {
+        mainFrame.updateScorePlayer(managerGame.getScorePlayer());
+    }
+
     @Override
     public void run() {
         while (managerGame.isPlaying()) {
@@ -111,9 +122,11 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            this.managerGame.verifyIsPlaying();
             this.controlSingleEnemy();
             this.controlGroupEnemies();
             this.controlBulletPlayer();
+            this.controlScorePlayer();
         }
         this.manageScorePlayer();
     }

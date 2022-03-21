@@ -12,6 +12,7 @@ public class SingleEnemy extends Enemy implements  Runnable {
 
     public SingleEnemy(Coordinates coordinates) {
         super(coordinates);
+        this.setType(TypeEnemy.SINGLE_ENEMY);
     }
 
     @Override

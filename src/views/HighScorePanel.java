@@ -30,9 +30,6 @@ public class HighScorePanel extends JPanel {
         title = new JLabel("High Scores");
         SettingsComponents.setCharacteristicsLabel(title, 200);
 
-        for(int i = 0; i < 10; i++){
-            highScoreList.add(i + "");
-        }
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
@@ -56,6 +53,11 @@ public class HighScorePanel extends JPanel {
             scoresList.add(aux);
             this.add(aux, gbc);
             i++;
+        }
+    }
+    public  void updateLabels(ArrayList<String> highScoreList){
+        for (int i = 0; i < highScoreList.size(); i++) {
+            scoresList.get(i).setText(highScoreList.get(i));
         }
     }
 }
