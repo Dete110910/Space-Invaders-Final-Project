@@ -42,4 +42,10 @@ public class ChooseGameModePanel extends JPanel {
         this.add(twoPlayers, gbc);
         this.add(twoPlayersLAN, gbc);
     }
+
+    @Override
+    public void paint(Graphics g){
+        SettingsComponents.setBackground(this, g);
+        super.paint(g);
+    }
 }
