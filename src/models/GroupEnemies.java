@@ -43,7 +43,7 @@ public class GroupEnemies {
 
     private Coordinates verifyLast() {
         if (direction == 1) {
-            for (int i = invadersList.size() - 1; i >= 0; i--) { //¿menos 1?
+            for (int i = invadersList.size() - 1; i >= 0; i--) {
                 for (int j = invadersList.get(i).size()-1; j >=0; j--) {
                     if (!invadersList.get(i).get(j).getIsDead()) {
                         return invadersList.get(i).get(j).getCoordinates();
@@ -70,7 +70,7 @@ public class GroupEnemies {
         Coordinates coordinates = this.verifyLast();
         if (coordinates.getCoordenateX() <= INIT_COORDINATE_X_ENEMY) {
             return 1;
-        } else if (coordinates.getCoordenateX() >= 235) {
+        } else if (coordinates.getCoordenateX() >= 620) {
             return 0;
         }
         return direction;
