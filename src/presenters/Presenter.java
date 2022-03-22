@@ -1,7 +1,7 @@
 package presenters;
 
-import models.ManagerGame;
-import views.MainFrame;
+import models.managers.ManagerGame;
+import views.frames.MainFrame;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,65 +15,73 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
     private Thread threadManagerGame;
 
     public Presenter() {
-        mainFrame = new MainFrame(this, this);
-        managerGame = new ManagerGame(mainFrame.getWidth(), mainFrame.getHeight());
-        mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
-        mainFrame.setYPositionPlayer(managerGame.getYPositionPlayer());
-        this.threadManagerGame = new Thread(managerGame);
+        this.managerGame = new ManagerGame();
+        this.mainFrame = new MainFrame(this, this, this.managerGame.getInformationHighScores());
     }
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         switch (actionEvent.getActionCommand()) {
             case "Play":
-                mainFrame.changeToSelectPlayersPanel();
+                this.controlPlay();
                 break;
             case "HighScore":
-                mainFrame.changeToHighScoresPanel();
+                this.mainFrame.changeToHighScoresPanel();
+                this.mainFrame.updateLabels(this.managerGame.getInformationHighScores());
                 break;
             case "Back":
-                mainFrame.changeToMainPanel();
+                this.mainFrame.changeToMainPanel();
                 break;
             case "PlayOnePlayer":
-                managerGame.setPlaying(true);
-                mainFrame.changeToOnePlayerPanel();
-                managerGame.runEnemies();
-                Thread gameThread = new Thread(this);
-                gameThread.start();
+                this.controlPlayOnePlayer();
                 break;
-            case "PlayTwoPlayers":
-                System.out.println("To implement");
-                break;
-            case "PlayTwoPlayersLAN":
-                System.out.println("To implement");
+            case "Done":
+                this.managerGame.setNamePlayer(this.mainFrame.getNamePlayer());
+                this.mainFrame.changeToMainPanelFromFinalGamePanel();
                 break;
             case "Tutorial":
-                mainFrame.changeToTutorialPanel();
+                this.mainFrame.changeToTutorialPanel();
                 break;
         }
     }
 
+    private void controlPlayOnePlayer() {
+        this.managerGame.setPlaying(true);
+        this.mainFrame.changeToOnePlayerPanel();
+        this.managerGame.runEnemies();
+        Thread gameThread = new Thread(this);
+        gameThread.start();
+    }
+
+    private void controlPlay() {
+        this.mainFrame.changeToSelectPlayersPanel();
+        this.managerGame = new ManagerGame(this.mainFrame.getWidth(), this.mainFrame.getHeight());
+        this.mainFrame.setXPositionPlayer(this.managerGame.getXPositionPlayer());
+        this.mainFrame.setYPositionPlayer(this.managerGame.getYPositionPlayer());
+        this.threadManagerGame = new Thread(this.managerGame);
+    }
+
     @Override
     public void keyPressed(KeyEvent e) {
-        if (managerGame.isPlaying())
-            if (e.getKeyChar() == 'a') {
-                managerGame.moveLeftPlayer();
-                mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
-            } else if (e.getKeyChar() == 'd') {
-                managerGame.moveRightPlayer();
-                mainFrame.setXPositionPlayer(managerGame.getXPositionPlayer());
+        if (this.managerGame.getIsPlaying())
+            if (e.getKeyChar() == 'a' || e.getKeyChar() == 'A') {
+                this.managerGame.moveLeftPlayer();
+                this.mainFrame.setXPositionPlayer(this.managerGame.getXPositionPlayer());
+            } else if (e.getKeyChar() == 'd' || e.getKeyChar() == 'D') {
+                this.managerGame.moveRightPlayer();
+                this.mainFrame.setXPositionPlayer(this.managerGame.getXPositionPlayer());
             } else if (e.getKeyChar() == ' ') {
-
-                managerGame.createPlayerBullets();
-                if (Thread.State.NEW == threadManagerGame.getState()){
-                     threadManagerGame.start();
-                    System.out.println("me comencé");
-                }else if ( Thread.State.TERMINATED == threadManagerGame.getState()){
-                    threadManagerGame = new Thread(managerGame);
-                    System.out.println("soy nuevo en el presenter ");
-                }
+                this.controlShot();
             }
+    }
 
+    private void controlShot() {
+        this.managerGame.createPlayerBullets();
+        if (Thread.State.NEW == this.threadManagerGame.getState()) {
+            this.threadManagerGame.start();
+        } else if (Thread.State.TERMINATED == threadManagerGame.getState()) {
+            this.threadManagerGame = new Thread(this.managerGame);
+        }
     }
 
     @Override
@@ -86,33 +94,45 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
     }
 
 
+    private void controlBulletPlayer() {
+        this.mainFrame.setInformationBullets(this.managerGame.getInformationPLayerBullets());
+    }
+
+    private void controlSingleEnemy() {
+        this.mainFrame.setXPositionSingleEnemy(this.managerGame.getXPositionSingleEnemy());
+        this.mainFrame.setYPositionSingleEnemy(this.managerGame.getYPositionSingleEnemy());
+        this.mainFrame.setVisibleSingleEnemy(!this.managerGame.getIsDeadSingleEnemy());
+    }
+
+    private void controlGroupEnemies() {
+        this.mainFrame.setInformationInvaders(this.managerGame.getInformationInvaders());
+    }
+
+    private void manageScorePlayer() {
+        this.mainFrame.changeToWinAndLosePanel(this, this.managerGame.getIsWin());
+        this.mainFrame.setFinalScore(String.valueOf(this.managerGame.getScorePlayer()));
+    }
+
+    private void controlScorePlayer() {
+        this.mainFrame.updateScorePlayer(this.managerGame.getScorePlayer());
+    }
+
     @Override
     public void run() {
-
-        while (true) {
+        while (this.managerGame.getIsPlaying()) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            this.managerGame.verifyIsPlaying();
             this.controlSingleEnemy();
             this.controlGroupEnemies();
             this.controlBulletPlayer();
+            this.controlScorePlayer();
         }
+        this.manageScorePlayer();
     }
 
-    private void controlBulletPlayer() {
-        mainFrame.setInformationBullets(managerGame.getInformationPLayerBullets());
-
-    }
-
-    private void controlSingleEnemy() {
-        mainFrame.setXPositionSingleEnemy(managerGame.getXPositionSingleEnemy());
-        mainFrame.setYPositionSingleEnemy(managerGame.getYPositionSingleEnemy());
-    }
-
-    private void controlGroupEnemies() {
-        mainFrame.setInformationInvaders(managerGame.getInformationInvaders());
-    }
 
 }

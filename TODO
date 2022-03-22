@@ -1,15 +1,28 @@
 0. Back button (done)
 1. Create bullets (done)
-2. Make collitions between bullets and invaders (and the finish this when this happen and get out of the frame)
+2. Make collisions between bullets and invaders (and the finish this when this happen and get out of the frame)
 3. Make invaders with both movements (vertical and horizontal) (done)
-  3a. Make faster the horizontal movements when a invader dies
+  3a. Make faster the horizontal movements when a invader dies (done)
 4. Make the different types of invaders (done)
-5. Make the score of the player
-6. Make the write of the highest scores (and make the interface of this in the initial frame)
+5. Make the score of the player (done)
+6. Make the write of the highest scores (and make the interface of this in the initial frame) (done)
 7. Make the multiplayer
 
 
 8. Make the UNIT TEST
 
-Aditional:
+Additional:
 1. Fonts (done)
+
+
+Collision with player
+
+Implements win and Lose // Views and Models
+Score // Views and Models
+Persistence
+
+
+Review code
+Add implements // 2 player, lives - BulletEnemies,  walls,
+Review diagram
+

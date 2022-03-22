@@ -1,5 +1,9 @@
 package models;
 
+import models.entities.Coordinates;
+import models.entities.Invader;
+import models.enums.TypeEnemy;
+
 import java.util.ArrayList;
 
 public class GroupEnemies {
@@ -62,15 +66,11 @@ public class GroupEnemies {
         return new Coordinates(-5, -5);
     }
 
-    public void win() {
-
-    }
-
     private int defineDirection() {
         Coordinates coordinates = this.verifyLast();
-        if (coordinates.getCoordenateX() <= INIT_COORDINATE_X_ENEMY) {
+        if (coordinates.getCoordinateX() <= INIT_COORDINATE_X_ENEMY) {
             return 1;
-        } else if (coordinates.getCoordenateX() >= 620) {
+        } else if (coordinates.getCoordinateX() >= 620) {
             return 0;
         }
         return direction;
@@ -83,7 +83,7 @@ public class GroupEnemies {
         }
         for (ArrayList<Invader> invaders : invadersList) {
             for (Invader invader : invaders) {
-                invader.setXCoordinates(invader.getCoordinates().getCoordenateX() + aux);
+                invader.setXCoordinates(invader.getCoordinates().getCoordinateX() + aux);
             }
         }
     }
@@ -92,7 +92,7 @@ public class GroupEnemies {
         if (this.direction != direction) {
             for (ArrayList<Invader> rowList : invadersList) {
                 for (Invader invader : rowList) {
-                    invader.setYCoordinates(invader.getCoordinates().getCoordenateY() + VELOCITY_ENEMY_Y);
+                    invader.setYCoordinates(invader.getCoordinates().getCoordinateY() + VELOCITY_ENEMY_Y);
                 }
             }
             this.direction = (byte) direction;
@@ -104,9 +104,9 @@ public class GroupEnemies {
         for (int i = 0; i < invadersList.size(); i++) {
             for (int j = 0; j < invadersList.get(i).size(); j++) {
                 if (!invadersList.get(i).get(j).getIsDead()) {
-                    if (invadersList.get(i).get(j).verifyCollition(coordinatesBullet)) {
+                    if (invadersList.get(i).get(j).verifyCollision(coordinatesBullet)) {
                         System.out.println("Entro en group Enemies");
-                        invadersList.get(i).get(j).setDead(true);
+                        invadersList.get(i).get(j).setIsDead(true);
                         return true;
                     }
                 }
@@ -121,8 +121,8 @@ public class GroupEnemies {
             ArrayList<ArrayList<Integer>> informationRowList = new ArrayList<>();
             for (Invader invader : rows) {
                 ArrayList<Integer> informationInvader = new ArrayList<>();
-                informationInvader.add(invader.getCoordinates().getCoordenateX());
-                informationInvader.add(invader.getCoordinates().getCoordenateY());
+                informationInvader.add(invader.getCoordinates().getCoordinateX());
+                informationInvader.add(invader.getCoordinates().getCoordinateY());
                 informationInvader.add((invader.getIsDead()) ? 0 : 1);
                 informationInvader.add(invader.getType().getType());
                 informationRowList.add(informationInvader);
