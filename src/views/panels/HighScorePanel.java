@@ -58,6 +58,12 @@ public class HighScorePanel extends JPanel {
         }
     }
 
+    @Override
+    public void paint(Graphics g){
+        SettingsComponents.setBackground(this, g);
+        super.paint(g);
+    }
+
     public void updateLabels(ArrayList<String> highScoreList) {
         for (int i = 0; i < highScoreList.size(); i++) {
             this.scoresList.get(i).setText(highScoreList.get(i));

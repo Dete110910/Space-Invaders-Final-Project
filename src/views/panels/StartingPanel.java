@@ -47,4 +47,9 @@ public class StartingPanel extends JPanel {
         gbc.insets = new Insets(10, 0, 0, 0);
     }
 
+    @Override
+    public void paint(Graphics g){
+        SettingsComponents.setBackground(this, g);
+        super.paint(g);
+    }
 }
