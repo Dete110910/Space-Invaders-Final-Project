@@ -33,8 +33,7 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
                 this.mainFrame.changeToMainPanel();
                 break;
             case "PlayOnePlayer":
-                this.controlPlayOnePlayer();
-                break;
+
             case "Done":
                 this.managerGame.setNamePlayer(this.mainFrame.getNamePlayer());
                 this.mainFrame.changeToMainPanelFromFinalGamePanel();
@@ -45,20 +44,16 @@ public class Presenter implements ActionListener, KeyListener, Runnable {
         }
     }
 
-    private void controlPlayOnePlayer() {
+    private void controlPlay() {
+        this.managerGame = new ManagerGame(this.mainFrame.getWidth(), this.mainFrame.getHeight());
+        this.mainFrame.setXPositionPlayer(this.managerGame.getXPositionPlayer());
+        this.mainFrame.setYPositionPlayer(this.managerGame.getYPositionPlayer());
+        this.threadManagerGame = new Thread(this.managerGame);
         this.managerGame.setPlaying(true);
         this.mainFrame.changeToOnePlayerPanel();
         this.managerGame.runEnemies();
         Thread gameThread = new Thread(this);
         gameThread.start();
-    }
-
-    private void controlPlay() {
-        this.mainFrame.changeToSelectPlayersPanel();
-        this.managerGame = new ManagerGame(this.mainFrame.getWidth(), this.mainFrame.getHeight());
-        this.mainFrame.setXPositionPlayer(this.managerGame.getXPositionPlayer());
-        this.mainFrame.setYPositionPlayer(this.managerGame.getYPositionPlayer());
-        this.threadManagerGame = new Thread(this.managerGame);
     }
 
     @Override
